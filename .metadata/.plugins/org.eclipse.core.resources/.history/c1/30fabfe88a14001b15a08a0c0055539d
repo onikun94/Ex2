@@ -42,7 +42,6 @@ public class FactorAmp extends CParseRule {
 			this.setCType(CType.getCType(res));
 			this.setConstant(numType.isConstant());
 		}
-		System.out.print("semanticCheckは動いています");
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
