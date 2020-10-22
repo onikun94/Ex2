@@ -1,0 +1,19 @@
+INDEX VERSION 1.131+C:\pleiades\pleiades\workspace\.metadata\.plugins\org.eclipse.jdt.core
+379545496.index
+2004001572.index
+3410019890.index
+4195270534.index
+2888576774.index
+1210841823.index
+1943689599.index
+1015702704.index
+1013084794.index
+3194988635.index
+3294447452.index
+4098111849.index
+259355169.index
+525346572.index
+4001100446.index
+4092433337.index
+945516740.index
+2533557508.index
