@@ -9,24 +9,25 @@ import lang.c.CType;
 
 public class FactorAmp extends CParseRule {
 	// term ::= factor
-	private CToken op;
+	//private CToken op;
 	private CParseRule numType;
+
 	public FactorAmp(CParseContext pcx) {
 	}
 	public static boolean isFirst(CToken tk) {
-		return Factor.isFirst(tk);
+		return tk.getType() ==  CToken.TK_AMP;
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
-		// ここにやってくるときは、必ずisFirst()が満たされている
-		//factor = new Factor(pcx);
-		//factor.parse(pcx);
-		   // ここにやってくるときは、必ずisFirst()が満たされている
         CTokenizer ct = pcx.getTokenizer();
-        op = ct.getCurrentToken(pcx);
-        // &の次の字句を読む
+        //CToken fa = ct.getCurrentToken(pcx);
+
         CToken tk = ct.getNextToken(pcx);
 
+        if(tk.getType() == CToken.TK_NUM) {
+        	numType = new Number(pcx);
+        }
 
+        numType.parse(pcx);
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
