@@ -10,6 +10,7 @@ import lang.c.CToken;
 public class Factor extends CParseRule {
 	// factor ::= number
 	private CParseRule number;
+	private CParseRule factorAmp;
 
 	public Factor(CParseContext pcx) {
 	}
@@ -18,7 +19,7 @@ public class Factor extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
-		CParseRule factorAmp = null;
+
 		factorAmp = new FactorAmp(pcx);//追加
 		factorAmp.parse(pcx);//追加
 		//number = new Number(pcx);
