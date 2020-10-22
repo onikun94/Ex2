@@ -113,7 +113,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				accept = true;
 				break;
 			case 3:					// 数（10進数）の開始
-				System.out.println("3番に移動");
+				//System.out.println("3番に移動");
 				ch = readChar();
 				System.out.println(text.toString());
 
