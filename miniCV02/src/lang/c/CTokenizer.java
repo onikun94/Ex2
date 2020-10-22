@@ -72,12 +72,13 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 			switch (state) {
 			case 0:					// 初期状態
 				ch = readChar();
-				//System.out.println("以下の文字で状態遷移"+ch);
+				System.out.println("以下の文字で状態遷移"+ch);
 				if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
 				} else if (ch == (char) -1) {	// EOF
 					startCol = colNo - 1;
 					state = 1;
 				} else if (ch >= '0' && ch <= '9') {
+					System.out.println("数字を扱う");
 					startCol = colNo - 1;
 					text.append(ch);
 					state = 10;
@@ -113,9 +114,9 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				accept = true;
 				break;
 			case 3:					// 数（10進数）の開始
-				//System.out.println("3番に移動");
+				System.out.println("3番に移動");
 				ch = readChar();
-				System.out.println(text.toString());
+				//System.out.println(text.toString());
 
 				if (Character.isDigit(ch)|| (isNum && ((ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F')))) {
 					text.append(ch);
@@ -204,14 +205,19 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				break;
 			case 10://16進数と8進数の処理
 				 ch = readChar();
+				 System.out.println("いま読んだのはなんだ"+ch);
                  if (ch == 'x' || (ch >= '0' && ch <= '9')) {
                      startCol = colNo - 1;
                      isNum = true;
                      text.append(ch);
+                     System.out.println("状態3に移行");
                      state = 3;
                  } else {
+                	 System.out.println("数字以外のとき");
                      backChar(ch);
+                     System.out.println(text.toString());
                      tk = new CToken(CToken.TK_NUM, lineNo, startCol, text.toString());
+
                      accept = true;
                  }
                  break;
