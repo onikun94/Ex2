@@ -75,14 +75,20 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				System.out.println("以下の文字で状態遷移"+ch);
 				if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
 				} else if (ch == (char) -1) {	// EOF
+					System.out.println("EOF処理に移動");
 					startCol = colNo - 1;
 					state = 1;
-				} else if (ch >= '0' && ch <= '9') {
+				} else if (ch > '0' && ch <= '9') {
 					System.out.println("数字を扱う");
 					startCol = colNo - 1;
 					text.append(ch);
+					state = 3;
+				} else if(ch =='0') {
+					startCol = colNo - 1;
+					text.append(ch);
 					state = 10;
-				} else if (ch == '+') {
+				}
+				else if (ch == '+') {
 					startCol = colNo - 1;
 					text.append(ch);
 					state = 4;
@@ -106,6 +112,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				}
 				break;
 			case 1:					// EOFを読んだ
+				System.out.println("case1");
 				tk = new CToken(CToken.TK_EOF, lineNo, startCol, "end_of_file");
 				accept = true;
 				break;
@@ -116,7 +123,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 			case 3:					// 数（10進数）の開始
 				System.out.println("3番に移動");
 				ch = readChar();
-				//System.out.println(text.toString());
+				System.out.println(text.toString());
 
 				if (Character.isDigit(ch)|| (isNum && ((ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F')))) {
 					text.append(ch);
@@ -137,6 +144,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				}
 				break;
 			case 4:					// +を読んだ
+				System.out.println("+の処理");
 				tk = new CToken(CToken.TK_PLUS, lineNo, startCol, "+");
 				accept = true;
 				break;
@@ -214,7 +222,11 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                      state = 3;
                  } else {
                 	 System.out.println("数字以外のとき");
-                     backChar(ch);
+                	 if(ch == (char) -1) {
+                         backChar(ch); //読まなかったことにする
+                         state = 1;
+                	 }
+                     //backChar(ch);
                      System.out.println(text.toString());
                      tk = new CToken(CToken.TK_NUM, lineNo, startCol, text.toString());
 
