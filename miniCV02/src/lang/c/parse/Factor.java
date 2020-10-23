@@ -6,6 +6,7 @@ import lang.FatalErrorException;
 import lang.c.CParseContext;
 import lang.c.CParseRule;
 import lang.c.CToken;
+import lang.c.CTokenizer;
 
 public class Factor extends CParseRule {
 	// factor ::= number
@@ -19,11 +20,18 @@ public class Factor extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
+		System.out.println("Factorのparse");
+		CTokenizer ct = pcx.getTokenizer();
+		CToken tk = ct.getCurrentToken(pcx);
+		if(tk.getType() == CToken.TK_NUM) {
+			number = new Number(pcx);
+			number.parse(pcx);
+		}else {
+			factorAmp = new FactorAmp(pcx);//追加
+			factorAmp.parse(pcx);//追加
+		}
 
-		factorAmp = new FactorAmp(pcx);//追加
-		factorAmp.parse(pcx);//追加
-		//number = new Number(pcx);
-		//number.parse(pcx);
+
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
