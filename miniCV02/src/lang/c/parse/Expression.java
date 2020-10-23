@@ -20,6 +20,7 @@ public class Expression extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
+		System.out.println("Expressionにやってきた");
 		CParseRule term = null, list = null;
 		term = new Term(pcx);
 		term.parse(pcx);
@@ -27,6 +28,7 @@ public class Expression extends CParseRule {
 		CToken tk = ct.getCurrentToken(pcx);
 		while (ExpressionAdd.isFirst(tk)|| ExpressionSub.isFirst(tk)) {
 			if(tk.getType() == CToken.TK_PLUS) {
+				System.out.println("expressionの＋");
 				list = new ExpressionAdd(pcx, term);
 			}else if(tk.getType() == CToken.TK_MINUS) {
 				list = new ExpressionSub(pcx, term);

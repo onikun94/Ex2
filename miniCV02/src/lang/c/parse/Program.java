@@ -19,12 +19,14 @@ public class Program extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
+		System.out.println("Programのparse処理をします");
 		program = new Expression(pcx);
+		System.out.println("program="+program);
 		program.parse(pcx);
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
-		//System.out.println(tk.getType());
-		//System.out.println(CToken.TK_EOF);
+		System.out.println("現在のタイプは"+tk.getType());
+		System.out.println("EOFは"+CToken.TK_EOF);
 		if (tk.getType() != CToken.TK_EOF) {
 			pcx.fatalError(tk.toExplainString() + "プログラムの最後にゴミがあります");
 		}

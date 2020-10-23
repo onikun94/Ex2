@@ -2,8 +2,10 @@ package lang.c.parse;
 
 import java.io.PrintStream;
 
-import lang.*;
-import lang.c.*;
+import lang.FatalErrorException;
+import lang.c.CParseContext;
+import lang.c.CParseRule;
+import lang.c.CToken;
 
 public class Term extends CParseRule {
 	// term ::= factor
@@ -15,6 +17,7 @@ public class Term extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
+		System.out.println("Termのparse");
 		factor = new Factor(pcx);
 		factor.parse(pcx);
 	}
