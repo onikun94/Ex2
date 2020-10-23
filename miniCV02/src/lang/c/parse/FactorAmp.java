@@ -26,25 +26,30 @@ public class FactorAmp extends CParseRule {
         if(tk.getType() == CToken.TK_NUM) {
         	numType = new Number(pcx);
         }
+        System.out.println("tk.getType()="+tk.getType());
+        System.out.println("TK_NUM="+CToken.TK_NUM);
+
+        System.out.println("FactorAmpのparse");
 
         numType.parse(pcx);
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
-		if (numType != null) {
+		final int s[] = {
+//				T_int
+				CType.T_pint
+		};
+		if (numType != null ) {
 			numType.semanticCheck(pcx);
-			final int type = numType.getCType().getType();
-			int res = 0;
-			if(type == CType.T_int) {
-				res = CType.T_pint;
-			}else {
-				 pcx.fatalError(type + "不正な型です");
-			}
-			this.setCType(CType.getCType(res));
-			this.setConstant(numType.isConstant());
+
+			int tp = numType.getCType().getType();
+			int nt = s[tp];						// 規則による型計算
+			this.setCType(CType.getCType(nt));
+			this.setConstant(numType.isConstant());	// -の左右両方が定数のときだけ定数
 		}
-		System.out.print("semanticCheckは動いています");
+
 	}
+
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
 		numType.codeGen(pcx);
