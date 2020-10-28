@@ -16,7 +16,7 @@ public class Factor extends CParseRule {
 	public Factor(CParseContext pcx) {
 	}
 	public static boolean isFirst(CToken tk) {
-		return Number.isFirst(tk);
+		return Number.isFirst(tk) || FactorAmp.isFirst(tk);
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
@@ -27,6 +27,7 @@ public class Factor extends CParseRule {
 			number = new Number(pcx);
 			number.parse(pcx);
 		}else {
+			System.out.println("FactorAmpに移動しろ");
 			factorAmp = new FactorAmp(pcx);//追加
 			factorAmp.parse(pcx);//追加
 		}

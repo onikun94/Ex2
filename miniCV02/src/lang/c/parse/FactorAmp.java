@@ -18,6 +18,7 @@ public class FactorAmp extends CParseRule {
 		return tk.getType() ==  CToken.TK_AMP;
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
+		System.out.println("FactorAmpのparseです");
         CTokenizer ct = pcx.getTokenizer();
         //CToken fa = ct.getCurrentToken(pcx);
 
@@ -36,14 +37,17 @@ public class FactorAmp extends CParseRule {
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		final int s[] = {
-//				T_int
-				CType.T_pint
+        //		T_err			T_int              T_pint
+				CType.T_err,    CType.T_pint,      CType.T_err
 		};
 		if (numType != null ) {
 			numType.semanticCheck(pcx);
 
 			int tp = numType.getCType().getType();
 			int nt = s[tp];						// 規則による型計算
+			if (nt == CType.T_err) {
+				pcx.fatalError(tp+ "不正です");
+			}
 			this.setCType(CType.getCType(nt));
 			this.setConstant(numType.isConstant());	// -の左右両方が定数のときだけ定数
 		}
