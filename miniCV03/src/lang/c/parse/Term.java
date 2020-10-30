@@ -1,0 +1,43 @@
+package lang.c.parse;
+
+import java.io.PrintStream;
+
+import lang.FatalErrorException;
+import lang.c.CParseContext;
+import lang.c.CParseRule;
+import lang.c.CToken;
+
+public class Term extends CParseRule {
+	// term ::= factor
+	private CParseRule factor;
+	public Term(CParseContext pcx) {
+	}
+	public static boolean isFirst(CToken tk) {
+		return Factor.isFirst(tk);
+	}
+	public void parse(CParseContext pcx) throws FatalErrorException {
+		System.out.println("Termのparse実行");
+		// ここにやってくるときは、必ずisFirst()が満たされている
+		factor = new Factor(pcx);
+		factor.parse(pcx);
+	}
+
+	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("TermのsemanticCheck実行");
+		if (factor != null) {
+			System.out.println("setCtype = " + factor.getCType());
+			System.out.println("setConstant = " + factor.isConstant());
+			factor.semanticCheck(pcx);
+			this.setCType(factor.getCType());		// factor の型をそのままコピー
+			this.setConstant(factor.isConstant());
+		}
+	}
+
+	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("TermのcodeGen実行");
+		PrintStream o = pcx.getIOContext().getOutStream();
+		o.println(";;; term starts");
+		if (factor != null) { factor.codeGen(pcx); }
+		o.println(";;; term completes");
+	}
+}
