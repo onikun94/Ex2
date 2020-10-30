@@ -4,4 +4,5 @@
     <fullyQualifiedTypeName name="sep3.model.Bus"/>
     <fullyQualifiedTypeName name="sep3.model.Decoder"/>
     <fullyQualifiedTypeName name="lang.c.CType"/>
+    <fullyQualifiedTypeName name="lang.c.CToken"/>
 </qualifiedTypeNameHistroy>
