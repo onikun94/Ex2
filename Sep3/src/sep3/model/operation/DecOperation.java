@@ -7,7 +7,7 @@ public class DecOperation extends Operation {
 	DecOperation(CPU cpu) { super(cpu); this.cpu = cpu; }
 	public void operate() {
 		// Aバスの値を-1してSバスに渡す
-		// EX0で起動するメソッドではないので、他の処理は一切不要。
+		// EX0で起動するメソッドではないので、他の処理は一切不要.
 		cpu.getSBus().setValue((cpu.getABus().getValue() - 1) & 0xFFFF);
 	}
 }
