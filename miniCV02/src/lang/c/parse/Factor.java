@@ -20,7 +20,7 @@ public class Factor extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
-		System.out.println("Factorのparse");
+		System.out.println("Factorのparse実行");
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
 		if(tk.getType() == CToken.TK_NUM) {
@@ -36,14 +36,20 @@ public class Factor extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("FactorのsemanticCheck実行");
 		if (number != null) {
 			number.semanticCheck(pcx);
 			setCType(number.getCType());		// number の型をそのままコピー
 			setConstant(number.isConstant());	// number は常に定数
+		}else if(factorAmp != null){
+			factorAmp.semanticCheck(pcx);
+			setCType(factorAmp.getCType());
+			setConstant(factorAmp.isConstant());
 		}
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("FactorのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		o.println(";;; factor starts");
 		if (number != null) { number.codeGen(pcx); }

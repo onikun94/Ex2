@@ -16,14 +16,17 @@ public class Term extends CParseRule {
 		return Factor.isFirst(tk);
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
+		System.out.println("Termのparse実行");
 		// ここにやってくるときは、必ずisFirst()が満たされている
-		System.out.println("Termのparse");
 		factor = new Factor(pcx);
 		factor.parse(pcx);
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("TermのsemanticCheck実行");
 		if (factor != null) {
+			System.out.println("setCtype = " + factor.getCType());
+			System.out.println("setConstant = " + factor.isConstant());
 			factor.semanticCheck(pcx);
 			this.setCType(factor.getCType());		// factor の型をそのままコピー
 			this.setConstant(factor.isConstant());
@@ -31,6 +34,7 @@ public class Term extends CParseRule {
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("TermのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		o.println(";;; term starts");
 		if (factor != null) { factor.codeGen(pcx); }

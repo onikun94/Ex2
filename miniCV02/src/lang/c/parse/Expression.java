@@ -20,7 +20,7 @@ public class Expression extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
-		System.out.println("Expressionにやってきた");
+		System.out.println("Expressionのparse実行");
 		CParseRule term = null, list = null;
 		term = new Term(pcx);
 		term.parse(pcx);
@@ -41,6 +41,7 @@ public class Expression extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ExpressionのsemanticCheck実行");
 		if (expression != null) {
 			expression.semanticCheck(pcx);
 			this.setCType(expression.getCType());		// expression の型をそのままコピー
@@ -49,6 +50,7 @@ public class Expression extends CParseRule {
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ExpressionのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		o.println(";;; expression starts");
 		if (expression != null) expression.codeGen(pcx);
@@ -68,6 +70,7 @@ class ExpressionAdd extends CParseRule {
 		return tk.getType() == CToken.TK_PLUS;
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ExpressionAddのparse実行");
 		// ここにやってくるときは、必ずisFirst()が満たされている
 		CTokenizer ct = pcx.getTokenizer();
 		op = ct.getCurrentToken(pcx);
@@ -82,6 +85,7 @@ class ExpressionAdd extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ExpressionAddのsemanticCheck実行");
 		// 足し算の型計算規則
 		final int s[][] = {
 		//		T_err			T_int              T_pint
@@ -104,6 +108,7 @@ class ExpressionAdd extends CParseRule {
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ExpressionAddのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		if (left != null && right != null) {
 			left.codeGen(pcx);		// 左部分木のコード生成を頼む
@@ -128,6 +133,7 @@ class ExpressionSub extends CParseRule {
 		return tk.getType() == CToken.TK_MINUS;
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ExpressionSubのparse実行");
 		// ここにやってくるときは、必ずisFirst()が満たされている
 		CTokenizer ct = pcx.getTokenizer();
 		op = ct.getCurrentToken(pcx);
@@ -142,6 +148,7 @@ class ExpressionSub extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ExpressionSubのsemanticCheck実行");
 		// 引き算の型計算規則
 		final int s[][] = {
 		//		T_err			T_int              T_pint
@@ -164,6 +171,7 @@ class ExpressionSub extends CParseRule {
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ExpressionSubのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		if (left != null && right != null) {
 			left.codeGen(pcx);		// 左部分木のコード生成を頼む

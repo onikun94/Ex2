@@ -18,7 +18,7 @@ public class FactorAmp extends CParseRule {
 		return tk.getType() ==  CToken.TK_AMP;
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
-		System.out.println("FactorAmpのparseです");
+		System.out.println("FactorAmpのparse実行");
         CTokenizer ct = pcx.getTokenizer();
         //CToken fa = ct.getCurrentToken(pcx);
 
@@ -36,6 +36,7 @@ public class FactorAmp extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("FactorAmpのsemanticCheck実行");
 		final int s[] = {
         //		T_err			T_int              T_pint
 				CType.T_err,    CType.T_pint,      CType.T_err
@@ -56,6 +57,7 @@ public class FactorAmp extends CParseRule {
 
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("FactorAmpのcodeGen実行");
 		numType.codeGen(pcx);
 	}
 }

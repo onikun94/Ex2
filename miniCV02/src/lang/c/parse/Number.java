@@ -18,7 +18,7 @@ public class Number extends CParseRule {
 		return tk.getType() == CToken.TK_NUM;
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
-		System.out.println("Numberのparse");
+		System.out.println("Numberのparse実行");
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
 		num = tk;
@@ -26,11 +26,13 @@ public class Number extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("NumberのsemanticCheck実行");
 		this.setCType(CType.getCType(CType.T_int));
 		this.setConstant(true);
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("NumberのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		o.println(";;; number starts");
 		if (num != null) {

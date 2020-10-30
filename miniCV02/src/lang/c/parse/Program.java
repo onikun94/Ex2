@@ -19,7 +19,7 @@ public class Program extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
-		System.out.println("Programのparse処理をします");
+		System.out.println("Programのparse実行");
 		program = new Expression(pcx);
 		System.out.println("program="+program);
 		program.parse(pcx);
@@ -33,10 +33,12 @@ public class Program extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ProgramのsemanticCheck実行");
 		if (program != null) { program.semanticCheck(pcx); }
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
+		System.out.println("ProgramのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		o.println(";;; program starts");
 		o.println("\t. = 0x100");

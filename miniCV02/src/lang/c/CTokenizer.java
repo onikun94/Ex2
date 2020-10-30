@@ -235,7 +235,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                  break;
 			case 11:
 				System.out.println("&についての処理");
-				tk = new CToken(CToken.TK_AMP, lineNo, startCol, text.toString());
+				tk = new CToken(CToken.TK_AMP, lineNo, startCol, "&");
 				accept = true;
 				break;
 
