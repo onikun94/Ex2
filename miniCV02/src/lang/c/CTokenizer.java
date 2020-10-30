@@ -100,12 +100,23 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 					startCol = colNo - 1;
 					text.append(ch);
 					state = 6;
-				}
-				else if(ch == '&'){//
+				} else if(ch == '&'){//
 					startCol = colNo -1;
 					text.append(ch);
 					state = 11;
-				}else {			// ヘンな文字を読んだ
+				} else if(ch == '*') {
+                    startCol = colNo - 1;
+                    text.append(ch);
+                    state = 12;
+				} else if(ch == '(') {
+                    startCol = colNo - 1;
+                    text.append(ch);
+                    state = 13;
+				} else if(ch == ')') {
+                    startCol = colNo - 1;
+                    text.append(ch);
+                    state = 14;
+				} else {			// ヘンな文字を読んだ
 					startCol = colNo - 1;
 					text.append(ch);
 					state = 2;
@@ -176,9 +187,15 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 					state = 0;
 					text = new StringBuffer();
 					//accept = true;
-				}else if(ch == (char) -1){
+				}else if (ch == ' ') { //割り算の次の数字が空白
+                    state = 15;
+                }else if(ch == (char) -1){
                     backChar(ch); //読まなかったことにする
                     state = 1;    //EOFの処理
+				}else {
+                    accept = true;
+                    backChar(ch);
+                    tk = new CToken(CToken.TK_DIV, lineNo, startCol, "/");
 				}
 
 				break;
@@ -238,7 +255,35 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				tk = new CToken(CToken.TK_AMP, lineNo, startCol, "&");
 				accept = true;
 				break;
-
+			case 12 :
+				System.out.print("*についての処理");
+                tk = new CToken(CToken.TK_MUL, lineNo, startCol, "*");
+                accept = true;
+                break;
+			case 13 :
+				System.out.println("(についての処理");
+                tk = new CToken(CToken.TK_LPAR, lineNo, startCol, "(");
+                accept = true;
+                break;
+			case 14 :
+				System.out.println(")についての処理");
+                tk = new CToken(CToken.TK_RPAR, lineNo, startCol, ")");
+                accept = true;
+                break;
+            case 15:
+            	System.out.println("割り算についての処理");
+                ch = readChar();
+                if (ch == ' ') {
+                } else if (Character.isDigit(ch)
+                        || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+                    backChar(ch);
+                    tk = new CToken(CToken.TK_DIV, lineNo, startCol, "/");
+                    accept = true;
+                } else {
+                    text.append(ch);
+                    state = 2;
+                }
+                break;
 
 			}
 
