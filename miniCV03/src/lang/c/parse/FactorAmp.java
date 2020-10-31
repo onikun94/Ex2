@@ -26,13 +26,14 @@ public class FactorAmp extends CParseRule {
 
         if(tk.getType() == CToken.TK_NUM) {
         	numType = new Number(pcx);
+        	numType.parse(pcx);
         }
         System.out.println("tk.getType()="+tk.getType());
         System.out.println("TK_NUM="+CToken.TK_NUM);
 
         System.out.println("FactorAmpのparse");
 
-        numType.parse(pcx);
+
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
@@ -50,7 +51,7 @@ public class FactorAmp extends CParseRule {
 				pcx.fatalError(tp+ "不正です");
 			}
 			this.setCType(CType.getCType(nt));
-			this.setConstant(numType.isConstant());	// -の左右両方が定数のときだけ定数
+			this.setConstant(numType.isConstant());
 		}
 
 	}

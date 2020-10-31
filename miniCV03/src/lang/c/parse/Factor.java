@@ -23,13 +23,16 @@ public class Factor extends CParseRule {
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
 		if(tk.getType() == CToken.TK_PLUS) {
+			System.out.println("FactorからPlusFactor");
 			factor = new PlusFactor(pcx);
 			factor.parse(pcx);
 		}else if(tk.getType() == CToken.TK_MINUS) {
+			System.out.println("FactorからMinusFactor");
 			factor = new MinusFactor(pcx);
 			factor.parse(pcx);
 		}
 		else {
+			System.out.println("FactorからUnsignedFactor");
 			factor = new UnsignedFactor(pcx);
 			factor.parse(pcx);
 

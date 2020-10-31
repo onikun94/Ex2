@@ -25,8 +25,8 @@ public class TermDiv extends CParseRule {
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		System.out.println("TermのsemanticCheck実行");
 		if (factor != null) {
-			System.out.println("setCtype = " + factor.getCType());
-			System.out.println("setConstant = " + factor.isConstant());
+			//System.out.println("setCtype = " + factor.getCType());
+			//System.out.println("setConstant = " + factor.isConstant());
 			factor.semanticCheck(pcx);
 			this.setCType(factor.getCType());		// factor の型をそのままコピー
 			this.setConstant(factor.isConstant());

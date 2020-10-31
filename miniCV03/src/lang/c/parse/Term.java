@@ -1,15 +1,18 @@
 package lang.c.parse;
 
+import java.util.ArrayList;
+
 import lang.FatalErrorException;
 import lang.c.CParseContext;
 import lang.c.CParseRule;
 import lang.c.CToken;
 import lang.c.CTokenizer;
-
+import lang.c.CType;
 public class Term extends CParseRule {
 	// term ::= factor
-	private CParseRule termMult;
-	private CParseRule termDiv;
+	private ArrayList<CParseRule> termMultDiv = new ArrayList<CParseRule>();
+	private CParseRule multDiv;
+
 
 	public Term(CParseContext pcx) {
 	}
@@ -19,34 +22,56 @@ public class Term extends CParseRule {
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		System.out.println("Termのparse実行");
 		// ここにやってくるときは、必ずisFirst()が満たされている
-		//factor = new Factor(pcx);
-		//factor.parse(pcx);
-		System.out.println("Factorのparse実行");
+		CParseRule factor = new Factor(pcx);
+		factor.parse(pcx);
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
 
-		if(tk.getType() == CToken.TK_MUL) {
-			termMult = new TermMult(pcx);
-			termMult.parse(pcx);
-		}else if(tk.getType() == CToken.TK_DIV) {
-			System.out.println("FactorAmpに移動しろ");
-			termDiv = new TermDiv(pcx);//追加
-			termDiv.parse(pcx);//追加
+		 termMultDiv.add(factor);
+		 System.out.println("ternMultDiv = "+termMultDiv.size());
+		while (TermMult.isFirst(tk) || TermDiv.isFirst(tk)) {
+		  if(tk.getType() == CToken.TK_MUL) {
+			  multDiv = new TermMult(pcx);
+			  tk = ct.getNextToken(pcx);
+			  multDiv.parse(pcx);
+			  termMultDiv.add(multDiv);
+		  }else if(tk.getType() == CToken.TK_DIV) {
+			  multDiv = new TermDiv(pcx);
+			  tk = ct.getNextToken(pcx);
+			  multDiv.parse(pcx);
+			  termMultDiv.add(multDiv);
+		  }
 		}
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		System.out.println("TermのsemanticCheck実行");
-		if (termMult != null) {
-			termMult.semanticCheck(pcx);
-			this.setCType(termMult.getCType());
-			this.setConstant(termMult.isConstant());
-		}else if(termDiv != null) {
-			termDiv.semanticCheck(pcx);
-			this.setCType(termDiv.getCType());
-			this.setConstant(termDiv.isConstant());
-		}
-	}
+		 if (termMultDiv.size() >= 2) {
+	            boolean isMulDivConstant = false;
+	            for (int i = 0; i + 1 <= termMultDiv.size() - 1; i++) {
+	                CParseRule left = termMultDiv.get(i);
+	                CParseRule right = termMultDiv.get(i + 1);
+	                left.semanticCheck(pcx);
+	                right.semanticCheck(pcx);
+	                int leftType = left.getCType().getType();
+	                int rightType = right.getCType().getType();
+	                int result = leftType * rightType;
+	                if (result != CType.T_int) {
+	                    pcx.fatalError("乗除算にはポインタまたはarrayを用いることができません:");
+	                }
+	                isMulDivConstant = left.isConstant() & right.isConstant();
+	            }
+	            this.setCType(CType.getCType(CType.T_int)); // 乗除算のときはポインタは使えないため
+	            this.setConstant(isMulDivConstant);
+	        } else if (termMultDiv.size() == 1) {
+	            CParseRule fac = termMultDiv.get(0);
+	            fac.semanticCheck(pcx);
+	            this.setCType(fac.getCType());		// factor の型をそのままコピー
+	            this.setConstant(fac.isConstant());
+	        } else {
+	            pcx.fatalError("MULT/DIVの後ろにfactorがありません");
+	        }
+	    }
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
 

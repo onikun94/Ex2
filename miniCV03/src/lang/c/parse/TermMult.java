@@ -6,6 +6,7 @@ import lang.FatalErrorException;
 import lang.c.CParseContext;
 import lang.c.CParseRule;
 import lang.c.CToken;
+import lang.c.CTokenizer;
 import lang.c.CType;
 
 public class TermMult extends CParseRule {
@@ -19,6 +20,8 @@ public class TermMult extends CParseRule {
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		System.out.println("Termのparse実行");
 		// ここにやってくるときは、必ずisFirst()が満たされている
+        CTokenizer ct = pcx.getTokenizer();
+        CToken tk = ct.getCurrentToken(pcx);
 		factor = new Factor(pcx);
 		factor.parse(pcx);
 	}
@@ -26,8 +29,6 @@ public class TermMult extends CParseRule {
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		System.out.println("TermのsemanticCheck実行");
 		if (factor != null) {
-			System.out.println("setCtype = " + factor.getCType());
-			System.out.println("setConstant = " + factor.isConstant());
 			factor.semanticCheck(pcx);
 			int type = factor.getCType().getType();
 			if(type == CType.T_pint) {
@@ -40,9 +41,9 @@ public class TermMult extends CParseRule {
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
-		System.out.println("TermのcodeGen実行");
+		System.out.println("TermMultのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
-		o.println(";;; term starts");
+		o.println(";;; termMult starts");
 		if (factor != null) {
             factor.codeGen(pcx);
             o.println("\tJSR\tMUL\t; TermMul:");

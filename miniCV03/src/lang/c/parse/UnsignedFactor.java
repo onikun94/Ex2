@@ -20,11 +20,11 @@ public class UnsignedFactor extends CParseRule {
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
-		System.out.println("Factorのparse実行");
+		System.out.println("UnsignedFactorのparse実行");
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
 		if(tk.getType() == CToken.TK_AMP) {
-			unsignedFactor = new Number(pcx);
+			unsignedFactor = new FactorAmp(pcx);
 			unsignedFactor.parse(pcx);
 		}else if(tk.getType() == CToken.TK_LPAR) {
 			 tk = ct.getNextToken(pcx);
@@ -42,6 +42,7 @@ public class UnsignedFactor extends CParseRule {
 	            }
 			 }
 		else if (tk.getType() == CToken.TK_NUM) {
+			System.out.println("UnsignedFactorからNumber");
             unsignedFactor = new Number(pcx);
             unsignedFactor.parse(pcx);
         }
@@ -58,7 +59,7 @@ public class UnsignedFactor extends CParseRule {
 	}
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
-		System.out.println("FactorのcodeGen実行");
+		System.out.println("unsignedFactorのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		o.println(";;; unsignedFactor starts");
 		if (unsignedFactor != null) { unsignedFactor.codeGen(pcx); }

@@ -21,7 +21,7 @@ public class Program extends CParseRule {
 		// ここにやってくるときは、必ずisFirst()が満たされている
 		System.out.println("Programのparse実行");
 		program = new Expression(pcx);
-		System.out.println("program="+program);
+		//System.out.println("program="+program);
 		program.parse(pcx);
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);

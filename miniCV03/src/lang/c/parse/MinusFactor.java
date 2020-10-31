@@ -39,7 +39,7 @@ public class MinusFactor extends CParseRule {
             this.setConstant(unsignedFactor.isConstant());
             int type = unsignedFactor.getCType().getType();
             if (type == CType.T_pint) {
-                pcx.fatalError("ポインタにーは付けられません");
+                pcx.fatalError("ポインタNG");
             }
         }
     }
@@ -47,7 +47,7 @@ public class MinusFactor extends CParseRule {
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
 		System.out.println("FactorのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
-		o.println(";;; plusfactor starts");
+		o.println(";;; minusfactor starts");
 		if (unsignedFactor != null) { unsignedFactor.codeGen(pcx); }
         o.println("\tMOV\t#0, R0\t; MinusFactor:");
         o.println("\tSUB\t-(R6), R0\t; MinusFactor:");

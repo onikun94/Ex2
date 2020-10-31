@@ -40,7 +40,7 @@ public class PlusFactor extends CParseRule {
     }
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
-		System.out.println("FactorのcodeGen実行");
+		System.out.println("PlusFactorのcodeGen実行");
 		PrintStream o = pcx.getIOContext().getOutStream();
 		o.println(";;; plusfactor starts");
 		if (unsignedFactor != null) { unsignedFactor.codeGen(pcx); }
