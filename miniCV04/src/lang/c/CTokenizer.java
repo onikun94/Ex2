@@ -117,7 +117,20 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                     startCol = colNo - 1;
                     text.append(ch);
                     state = 14;
-				} else {			// ヘンな文字を読んだ
+				}else if (ch == '[') {
+                    startCol = colNo - 1;
+                    text.append(ch);
+                    state = 16;
+                } else if (ch == ']') {
+                    startCol = colNo - 1;
+                    text.append(ch);
+                    state = 17;
+                }else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+                    startCol = colNo - 1;
+                    text.append(ch);
+                    state = 18;
+                }
+                else {			// ヘンな文字を読んだ
 					startCol = colNo - 1;
 					text.append(ch);
 					state = 2;
@@ -285,6 +298,33 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                     state = 2;
                 }
                 break;
+            case 16:
+            	System.out.println("[についての処理");
+                tk = new CToken(CToken.TK_LBRA, lineNo, startCol, "[");
+                accept = true;
+                break;
+            case 17:
+            	System.out.println("]についての処理");
+                tk = new CToken(CToken.TK_RBRA, lineNo, startCol, "]");
+                accept = true;
+                break;
+            case 18:
+            	System.out.println("識別子についての処理");
+            	 ch = readChar();
+                 if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')
+                         || (ch >= '0' && ch <= '9')) {
+                     text.append(ch);
+                 }else {
+					try {
+                            backChar(ch);
+                            tk = new CToken(CToken.TK_NUM, lineNo, startCol, text.toString());
+                        
+                        accept = true;
+                    } catch (NumberFormatException e) {
+                        state = 2;
+                    }
+
+				}
 
 			}
 
