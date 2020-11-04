@@ -16,7 +16,7 @@ public class UnsignedFactor extends CParseRule {
 	public UnsignedFactor(CParseContext pcx) {
 	}
 	public static boolean isFirst(CToken tk) {
-        return Number.isFirst(tk)|| FactorAmp.isFirst(tk)|| tk.getType() == CToken.TK_LPAR ;
+        return Number.isFirst(tk)|| FactorAmp.isFirst(tk)|| tk.getType() == CToken.TK_LPAR || AddressToValue.isFirst(tk) ;
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		// ここにやってくるときは、必ずisFirst()が満たされている
@@ -44,6 +44,9 @@ public class UnsignedFactor extends CParseRule {
 		else if (tk.getType() == CToken.TK_NUM) {
 			System.out.println("UnsignedFactorからNumber");
             unsignedFactor = new Number(pcx);
+            unsignedFactor.parse(pcx);
+        } else {
+            unsignedFactor = new AddressToValue(pcx);
             unsignedFactor.parse(pcx);
         }
 

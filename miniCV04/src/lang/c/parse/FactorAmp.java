@@ -27,11 +27,14 @@ public class FactorAmp extends CParseRule {
         if(tk.getType() == CToken.TK_NUM) {
         	numType = new Number(pcx);
         	numType.parse(pcx);
+        } else {
+        	numType = new Primary(pcx);
+        	numType.parse(pcx);
         }
-        System.out.println("tk.getType()="+tk.getType());
+        /*System.out.println("tk.getType()="+tk.getType());
         System.out.println("TK_NUM="+CToken.TK_NUM);
 
-        System.out.println("FactorAmpのparse");
+        System.out.println("FactorAmpのparse");*/
 
 
 	}
