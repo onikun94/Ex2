@@ -125,7 +125,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                     startCol = colNo - 1;
                     text.append(ch);
                     state = 17;
-                }else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+                }else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch == '_')) {
                     startCol = colNo - 1;
                     text.append(ch);
                     state = 18;
@@ -311,20 +311,20 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
             case 18:
             	System.out.println("識別子についての処理");
             	 ch = readChar();
-                 if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')
-                         || (ch >= '0' && ch <= '9')) {
+                 if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')|| (ch == '_') || (ch >= '0' && ch <= '9')) {
                      text.append(ch);
                  }else {
 					try {
                             backChar(ch);
-                            tk = new CToken(CToken.TK_NUM, lineNo, startCol, text.toString());
-                        
+                            tk = new CToken(CToken.TK_IDENT, lineNo, startCol, text.toString());
+
                         accept = true;
                     } catch (NumberFormatException e) {
                         state = 2;
                     }
 
 				}
+                 break;
 
 			}
 
