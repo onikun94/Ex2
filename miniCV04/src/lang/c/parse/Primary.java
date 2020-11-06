@@ -10,7 +10,6 @@ import lang.c.CTokenizer;
 
 public class Primary extends CParseRule {
     private CParseRule child;
-    public boolean isMultPrimary = false;
     public Primary(CParseContext pcx) {
     }
 
@@ -20,20 +19,16 @@ public class Primary extends CParseRule {
 
     @Override
     public void parse(CParseContext pcx) throws FatalErrorException {
-        //final var tokenizer = pcx.getTokenizer();
         CTokenizer ct = pcx.getTokenizer();
         CToken op = ct.getCurrentToken(pcx);
-        //final var token = tokenizer.getCurrentToken(pcx);
+
         if (op.getType() == CToken.TK_MUL) {
             child = new PrimaryMult(pcx);
-            isMultPrimary = true;
             child.parse(pcx);
         } else {
             child = new Variable(pcx);
-            isMultPrimary = false;
             child.parse(pcx);
         }
-
     }
 
     @Override

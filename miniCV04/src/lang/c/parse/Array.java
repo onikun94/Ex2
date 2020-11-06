@@ -25,9 +25,10 @@ public class Array extends CParseRule {
         ct.getNextToken(pcx);
         expression = new Expression(pcx);
         expression.parse(pcx);
+
         CToken tk = ct.getCurrentToken(pcx);
         if (tk.getType() != CToken.TK_RBRA) {
-            pcx.fatalError("arrayの[]が閉じていません");
+            pcx.fatalError("[]が閉じていません");
         }
         ct.getNextToken(pcx);
     }
@@ -38,7 +39,7 @@ public class Array extends CParseRule {
             expression.semanticCheck(pcx);
             CType ty = expression.getCType();
             if (ty.getType() != CType.T_int) {
-                pcx.fatalError("配列のインデックスにはintしか使えません");
+                pcx.fatalError("インデックス番号はintのみ使用可能です");
             }
             this.setCType(ty);
             this.setConstant(expression.isConstant());

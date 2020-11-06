@@ -7,6 +7,7 @@ import lang.c.CParseContext;
 import lang.c.CParseRule;
 import lang.c.CToken;
 import lang.c.CTokenizer;
+import lang.c.CType;
 
 public class Ident extends CParseRule {
     CToken ident;
@@ -18,7 +19,7 @@ public class Ident extends CParseRule {
         return tk.getType() == CToken.TK_IDENT;
     }
 
-    @Override
+
     public void parse(CParseContext pcx) throws FatalErrorException {
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
@@ -26,18 +27,32 @@ public class Ident extends CParseRule {
         ct.getNextToken(pcx);
     }
 
-    @Override
+
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+    	if(ident.toString().equals("i_")) {
+    		this.setCType(CType.getCType(CType.T_int));
+
+    	}else if(ident.toString().equals("ip_")) {
+    		this.setCType(CType.getCType(CType.T_pint));
+
+    	}else if(ident.toString().equals("ia_")) {
+    		this.setCType(CType.getCType(CType.T_int_arr));
+
+    	}else if(ident.toString().equals("ipa_")) {
+    		this.setCType(CType.getCType(CType.T_pint_arr));
+
+    	}else if(ident.toString().equals("c_")) {
+    		this.setConstant(true);
+    	}
 
     }
 
-    @Override
+
     public void codeGen(CParseContext pcx) throws FatalErrorException {
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; ident starts");
         if (ident != null) {
-            o.println("\tMOV\t#" + ident.getText() + ", (R6)+\t; Ident: 変数アドレスを積む<"
-                    + ident.toExplainString() + ">");
+            o.println("\tMOV\t#" + ident.getText() + ", (R6)+\t; Ident: 変数アドレスを積む<"+ ident.toExplainString() + ">");
         }
         o.println(";;; ident completes");
     }

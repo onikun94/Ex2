@@ -1,7 +1,6 @@
 package lang.c.parse;
 
 import java.io.PrintStream;
-import java.util.Optional;
 
 import lang.FatalErrorException;
 import lang.c.CParseContext;
@@ -10,8 +9,7 @@ import lang.c.CToken;
 import lang.c.CTokenizer;
 
 public class Variable extends CParseRule {
-    CParseRule ident;
-    Optional<CParseRule> array;
+    CParseRule identArray;
 
     public Variable(CParseContext pcx) {
     }
@@ -22,27 +20,36 @@ public class Variable extends CParseRule {
 
     @Override
     public void parse(CParseContext pcx) throws FatalErrorException {
-        ident = new Ident(pcx);
-        ident.parse(pcx);
+        identArray = new Ident(pcx);
+        identArray.parse(pcx);
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
-        //final var tokenizer = pcx.getTokenizer();
-        //var token = tokenizer.getCurrentToken(pcx);
-        CParseRule tmp_array = null;
+
         if (tk.getType() == CToken.TK_LBRA) {
-            tmp_array = new Array(pcx);
-            tmp_array.parse(pcx);
+            identArray = new Array(pcx);
+            identArray.parse(pcx);
+        }else {
+            identArray = new Ident(pcx);
+            identArray.parse(pcx);
         }
-        array = Optional.ofNullable(tmp_array);
     }
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+        if (identArray != null) {
+            identArray.semanticCheck(pcx);
+            this.setCType(identArray.getCType());
+            this.setConstant(identArray.isConstant());
+        }
     }
 
     @Override
     public void codeGen(CParseContext pcx) throws FatalErrorException {
         PrintStream o = pcx.getIOContext().getOutStream();
-
+        o.println(";;; variable starts");
+        if (identArray != null) {
+            identArray.codeGen(pcx);
+        }
+        o.println(";;; variable completes");
     }
 }

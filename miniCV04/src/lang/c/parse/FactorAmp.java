@@ -20,8 +20,7 @@ public class FactorAmp extends CParseRule {
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		System.out.println("FactorAmpのparse実行");
         CTokenizer ct = pcx.getTokenizer();
-        //CToken fa = ct.getCurrentToken(pcx);
-
+        //CToken tk = ct.getCurrentToken(pcx);
         CToken tk = ct.getNextToken(pcx);
 
         if(tk.getType() == CToken.TK_NUM) {
@@ -31,19 +30,18 @@ public class FactorAmp extends CParseRule {
         	numType = new Primary(pcx);
         	numType.parse(pcx);
         }
-        /*System.out.println("tk.getType()="+tk.getType());
-        System.out.println("TK_NUM="+CToken.TK_NUM);
-
-        System.out.println("FactorAmpのparse");*/
-
 
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		System.out.println("FactorAmpのsemanticCheck実行");
-		final int s[] = {
+		/*final int s[] = {
         //		T_err			T_int              T_pint
 				CType.T_err,    CType.T_pint,      CType.T_err
+		};*/
+		final int s[] = {
+		        //		T_err			T_int
+						CType.T_err,    CType.T_pint
 		};
 		if (numType != null ) {
 			numType.semanticCheck(pcx);
@@ -51,7 +49,7 @@ public class FactorAmp extends CParseRule {
 			int tp = numType.getCType().getType();
 			int nt = s[tp];						// 規則による型計算
 			if (nt == CType.T_err) {
-				pcx.fatalError(tp+ "不正です");
+				pcx.fatalError(tp+ "適切ではありません");
 			}
 			this.setCType(CType.getCType(nt));
 			this.setConstant(numType.isConstant());

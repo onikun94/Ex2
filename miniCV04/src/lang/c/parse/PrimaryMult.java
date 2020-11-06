@@ -23,12 +23,9 @@ public class PrimaryMult extends CParseRule {
     public void parse(CParseContext pcx) throws FatalErrorException {
         CTokenizer ct = pcx.getTokenizer();
         CToken tk = ct.getCurrentToken(pcx);
-        //final var tokenizer = pcx.getTokenizer();
-        //final var token = tokenizer.getNextToken(pcx);
         if (!Ident.isFirst(tk)) {
             pcx.fatalError(
-              String.format("[%s]*(ポインタ)演算子の後ろはIdentifierです",
-                            tk.toExplainString()));
+              String.format("[%s]*(ポインタ)演算子の後ろはIdentifierです", tk.toExplainString()));
         }
         variable = new Variable(pcx);
         variable.parse(pcx);
