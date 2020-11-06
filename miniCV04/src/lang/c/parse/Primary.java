@@ -9,7 +9,8 @@ import lang.c.CToken;
 import lang.c.CTokenizer;
 
 public class Primary extends CParseRule {
-    private CParseRule child;
+    private CParseRule mulVar;
+    public boolean isMultPrimary = false;
     public Primary(CParseContext pcx) {
     }
 
@@ -22,23 +23,26 @@ public class Primary extends CParseRule {
     	System.out.println("Primaryのparse実行");
         CTokenizer ct = pcx.getTokenizer();
         CToken op = ct.getCurrentToken(pcx);
+        System.out.println("PrimaryText =="+op.getText());
 
         if (op.getType() == CToken.TK_MUL) {
-            child = new PrimaryMult(pcx);
-            child.parse(pcx);
+            mulVar = new PrimaryMult(pcx);
+            isMultPrimary = true;
+            mulVar.parse(pcx);
         } else {
-            child = new Variable(pcx);
-            child.parse(pcx);
+            mulVar = new Variable(pcx);
+            isMultPrimary = false;
+            mulVar.parse(pcx);
         }
     }
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
     	System.out.println("PrimaryのsemanticCheck実行");
-        if (child != null) {
-            child.semanticCheck(pcx);
-            this.setCType(child.getCType());
-            this.setConstant(child.isConstant());
+        if (mulVar != null) {
+            mulVar.semanticCheck(pcx);
+            this.setCType(mulVar.getCType());
+            this.setConstant(mulVar.isConstant());
         }
     }
 
@@ -47,8 +51,8 @@ public class Primary extends CParseRule {
     	System.out.println("PrimaryのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; primary starts");
-        if (child != null) {
-            child.codeGen(pcx);
+        if (mulVar != null) {
+            mulVar.codeGen(pcx);
         }
         o.println(";;; primary completes");
     }

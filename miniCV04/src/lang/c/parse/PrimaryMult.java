@@ -10,7 +10,9 @@ import lang.c.CTokenizer;
 import lang.c.CType;
 
 public class PrimaryMult extends CParseRule {
-    CParseRule variable;
+	private CToken op;
+	private CToken tk;
+    private CParseRule child;
 
     public PrimaryMult(CParseContext pcx) {
     }
@@ -23,27 +25,31 @@ public class PrimaryMult extends CParseRule {
     public void parse(CParseContext pcx) throws FatalErrorException {
     	System.out.println("PrimaryMultのparse実行");
         CTokenizer ct = pcx.getTokenizer();
-        CToken tk = ct.getCurrentToken(pcx);
-        if (!Ident.isFirst(tk)) {
+        tk = ct.getCurrentToken(pcx);
+        System.out.println("tk.getType_Primarrytk =="+tk.getType());
+        op = ct.getNextToken(pcx);
+        System.out.println("tk.getType_Primarry =="+op.getType());
+        if (!Ident.isFirst(op)) {
             pcx.fatalError(
-              String.format("[%s]*(ポインタ)演算子の後ろはIdentifierです", tk.toExplainString()));
+              String.format("[%s]*(ポインタ)演算子の後ろはIdentifierです", op.toExplainString()));
         }
-        variable = new Variable(pcx);
-        variable.parse(pcx);
+        child = new Variable(pcx);
+        child.parse(pcx);
+
     }
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
     	System.out.println("PrimaryMultのsemanticCheck実行");
-        if (variable != null) {
-            variable.semanticCheck(pcx);
-            int  tp = variable.getCType().getType();
+        if (child != null) {
+            child.semanticCheck(pcx);
+            int  tp = child.getCType().getType();
             if (tp == CType.T_int) {
                 pcx.fatalError("数値はデリファレンスできません");
             } else if (tp == CType.T_pint) {
                 this.setCType(CType.getCType(CType.T_int));
             }
-            this.setConstant(variable.isConstant());
+            this.setConstant(child.isConstant());
         }
     }
 
@@ -52,11 +58,14 @@ public class PrimaryMult extends CParseRule {
     	System.out.println("PrimaryMultのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; primarymult starts");
-        if (variable != null) {
-            variable.codeGen(pcx);
+        if (child != null) {
+            child.codeGen(pcx);
+            o.println("\tMOV\t-(R6), R0\t; PrimaryMult: アドレスを取り出して、内容を参照して、積む<"
+            		+ op.toExplainString() + ">");
+            o.println("\tMOV\t(R0), (R6)+\t; PrimaryMult:");
+            o.println(";;; primarymult completes");
         }
-        o.println("\tMOV\t-(R6), R0\t; PrimaryMult:番地から値を取り出す");
-        o.println("\tMOV\t(R0), (R6)+\t; PrimaryMult:");
-        o.println(";;; primarymult completes");
+
+
     }
 }

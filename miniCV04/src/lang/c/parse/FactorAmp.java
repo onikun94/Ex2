@@ -41,6 +41,11 @@ public class FactorAmp extends CParseRule {
 		};
 
 		if (numType != null ) {
+	            if (numType instanceof Primary) {
+	                if (((Primary) numType).isMultPrimary) {
+	                    pcx.fatalError("&の後ろに*は付けられません");
+	                }
+	            }
 			numType.semanticCheck(pcx);
 
 			int tp = numType.getCType().getType();

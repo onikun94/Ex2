@@ -23,16 +23,25 @@ public class Variable extends CParseRule {
     	System.out.println("Variableのparse実行");
         identArray = new Ident(pcx);
         identArray.parse(pcx);
+
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
+		System.out.println("VariableText =="+tk.getText());
+		System.out.println("tk.getType =="+tk.getType());
+		System.out.println("CToken.TKLBRA =="+CToken.TK_LBRA);
 
+		//identArray = new Array(pcx);
+        //identArray.parse(pcx);
+
+        /*if(tk.getType() == CToken.TK_IDENT) {
+        	identArray = new Ident(pcx);
+            identArray.parse(pcx);
+        }*/
         if (tk.getType() == CToken.TK_LBRA) {
             identArray = new Array(pcx);
             identArray.parse(pcx);
-        }else {
-            identArray = new Ident(pcx);
-            identArray.parse(pcx);
         }
+
     }
 
     @Override

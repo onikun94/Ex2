@@ -23,11 +23,14 @@ public class Array extends CParseRule {
     public void parse(CParseContext pcx) throws FatalErrorException {
     	System.out.println("Arrayのparse実行");
         CTokenizer ct = pcx.getTokenizer();
+        //CToken tk = ct.getCurrentToken(pcx);
+       // System.out.println("ArrayText =="+tk.getText());
         ct.getNextToken(pcx);
         expression = new Expression(pcx);
         expression.parse(pcx);
 
         CToken tk = ct.getCurrentToken(pcx);
+        System.out.println("ArrayText =="+tk.getText());
         if (tk.getType() != CToken.TK_RBRA) {
             pcx.fatalError("[]が閉じていません");
         }
@@ -56,9 +59,6 @@ public class Array extends CParseRule {
         if (expression != null) {
             expression.codeGen(pcx);
         }
-        o.println("\tMOV\t-(R6), R0\t; Array:配列が示している番地を計算し、格納します");
-        o.println("\tADD\t-(R6), R0\t; Array:");
-        o.println("\tMOV\tR0, (R6)+\t; Array:");
         o.println(";;; array completes");
     }
 }

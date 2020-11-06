@@ -6,9 +6,11 @@ import lang.FatalErrorException;
 import lang.c.CParseContext;
 import lang.c.CParseRule;
 import lang.c.CToken;
+import lang.c.CTokenizer;
 
 public class AddressToValue extends CParseRule {
     CParseRule primary;
+    private CToken op;
 
     public AddressToValue(CParseContext pcx) {
     }
@@ -20,6 +22,11 @@ public class AddressToValue extends CParseRule {
     @Override
     public void parse(CParseContext pcx) throws FatalErrorException {
     	System.out.println("AddressToValueのparse実行");
+
+        CTokenizer ct = pcx.getTokenizer();
+        op = ct.getCurrentToken(pcx);
+        System.out.println("PrimaryText =="+op.getText());
+
         primary = new Primary(pcx);
         primary.parse(pcx);
     }

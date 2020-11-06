@@ -21,8 +21,10 @@ public class Number extends CParseRule {
 		System.out.println("Numberのparse実行");
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
+		System.out.println("NumberText =="+tk.getText());
 		num = tk;
 		tk = ct.getNextToken(pcx);
+
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {

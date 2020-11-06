@@ -23,7 +23,7 @@ public class MiniCompiler {
 				}
 				if (pcx.hasNoError()) {
 					System.out.println("MiniCompilerのcodeGen実行");
-					parseTree.codeGen(pcx);    // コード生成
+					//parseTree.codeGen(pcx);    // コード生成
 				}
 				pcx.errorReport();
 			} else {

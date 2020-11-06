@@ -31,20 +31,24 @@ public class Ident extends CParseRule {
 
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
     	System.out.println("IdentのsemanticCheck実行");
-    	System.out.println("IdentText =="+ident.getType());
-    	if(ident.getText().equals("ia_")) {
+    	System.out.println("IdentText =="+ident.getText());
+    	if(ident.getText().startsWith("i_")) {
     		this.setCType(CType.getCType(CType.T_int));
+    		System.out.println("i_のときのT_intの処理");
 
-    	}else if(ident.getText().equals("ip_")) {
+    	}else if(ident.getText().startsWith("ip_")) {
     		this.setCType(CType.getCType(CType.T_pint));
+    		System.out.println("ip_のときのT_pintの処理");
 
-    	}else if(ident.getText().equals("ia_")) {
+    	}else if(ident.getText().startsWith("ia_")) {
     		this.setCType(CType.getCType(CType.T_int_arr));
+    		System.out.println("ia_のときのT_int_arrの処理");
 
-    	}else if(ident.getText().equals("ipa_")) {
+    	}else if(ident.getText().startsWith("ipa_")) {
     		this.setCType(CType.getCType(CType.T_pint_arr));
+    		System.out.println("ipa_のときのT_pint_arrの処理");
 
-    	}else if(ident.getText().equals("c_")) {
+    	}else if(ident.getText().startsWith("c_")) {
     		this.setConstant(true);
     	}
 
