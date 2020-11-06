@@ -31,7 +31,7 @@ public class PrimaryMult extends CParseRule {
         System.out.println("tk.getType_Primarry =="+op.getType());
         if (!Ident.isFirst(op)) {
             pcx.fatalError(
-              String.format("[%s]*(ポインタ)演算子の後ろはIdentifierです", op.toExplainString()));
+              String.format("[%s]*(ポインタ)演算子の後ろは識別子", op.toExplainString()));
         }
         child = new Variable(pcx);
         child.parse(pcx);
@@ -43,9 +43,9 @@ public class PrimaryMult extends CParseRule {
     	System.out.println("PrimaryMultのsemanticCheck実行");
         if (child != null) {
             child.semanticCheck(pcx);
-            int  tp = child.getCType().getType();
+            final int  tp = child.getCType().getType();
             if (tp == CType.T_int) {
-                pcx.fatalError("数値はデリファレンスできません");
+                pcx.fatalError("参照できません");
             } else if (tp == CType.T_pint) {
                 this.setCType(CType.getCType(CType.T_int));
             }

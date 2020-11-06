@@ -53,8 +53,9 @@ public class UnsignedFactor extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
-		System.out.println("FactorのsemanticCheck実行");
+		System.out.println("UnsignedFactorのsemanticCheck実行");
 		if (unsignedFactor != null) {
+			System.out.println(unsignedFactor);
 			unsignedFactor.semanticCheck(pcx);
 			setCType(unsignedFactor.getCType());
 			setConstant(unsignedFactor.isConstant());

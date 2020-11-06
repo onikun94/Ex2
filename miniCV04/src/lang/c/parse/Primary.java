@@ -39,6 +39,7 @@ public class Primary extends CParseRule {
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
     	System.out.println("PrimaryのsemanticCheck実行");
+    	System.out.println("PrimaryのsemanticCheck"+mulVar);
         if (mulVar != null) {
             mulVar.semanticCheck(pcx);
             this.setCType(mulVar.getCType());
