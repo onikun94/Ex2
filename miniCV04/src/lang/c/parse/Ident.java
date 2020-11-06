@@ -21,6 +21,7 @@ public class Ident extends CParseRule {
 
 
     public void parse(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("Identのparse実行");
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
         ident = tk;
@@ -29,26 +30,30 @@ public class Ident extends CParseRule {
 
 
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
-    	if(ident.toString().equals("i_")) {
+    	System.out.println("IdentのsemanticCheck実行");
+    	System.out.println("IdentText =="+ident.getType());
+    	if(ident.getText().equals("ia_")) {
     		this.setCType(CType.getCType(CType.T_int));
 
-    	}else if(ident.toString().equals("ip_")) {
+    	}else if(ident.getText().equals("ip_")) {
     		this.setCType(CType.getCType(CType.T_pint));
 
-    	}else if(ident.toString().equals("ia_")) {
+    	}else if(ident.getText().equals("ia_")) {
     		this.setCType(CType.getCType(CType.T_int_arr));
 
-    	}else if(ident.toString().equals("ipa_")) {
+    	}else if(ident.getText().equals("ipa_")) {
     		this.setCType(CType.getCType(CType.T_pint_arr));
 
-    	}else if(ident.toString().equals("c_")) {
+    	}else if(ident.getText().equals("c_")) {
     		this.setConstant(true);
     	}
+
 
     }
 
 
     public void codeGen(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("IdentのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; ident starts");
         if (ident != null) {

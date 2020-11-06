@@ -28,7 +28,7 @@ public class Term extends CParseRule {
 		CToken tk = ct.getCurrentToken(pcx);
 
 		 termMultDiv.add(factor);
-		 System.out.println("ternMultDiv = "+termMultDiv.size());
+		 //System.out.println("ternMultDiv = "+termMultDiv.size());
 		while (TermMult.isFirst(tk) || TermDiv.isFirst(tk)) {
 		  if(tk.getType() == CToken.TK_MUL) {
 			  multDiv = new TermMult(pcx);

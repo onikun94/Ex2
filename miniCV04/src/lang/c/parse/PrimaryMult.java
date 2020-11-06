@@ -21,6 +21,7 @@ public class PrimaryMult extends CParseRule {
 
     @Override
     public void parse(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("PrimaryMultのparse実行");
         CTokenizer ct = pcx.getTokenizer();
         CToken tk = ct.getCurrentToken(pcx);
         if (!Ident.isFirst(tk)) {
@@ -33,6 +34,7 @@ public class PrimaryMult extends CParseRule {
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("PrimaryMultのsemanticCheck実行");
         if (variable != null) {
             variable.semanticCheck(pcx);
             int  tp = variable.getCType().getType();
@@ -47,6 +49,7 @@ public class PrimaryMult extends CParseRule {
 
     @Override
     public void codeGen(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("PrimaryMultのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; primarymult starts");
         if (variable != null) {

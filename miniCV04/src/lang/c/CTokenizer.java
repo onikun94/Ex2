@@ -73,7 +73,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 			switch (state) {
 			case 0:					// 初期状態
 				ch = readChar();
-				System.out.println("以下の文字で状態遷移"+ch);
+				//System.out.println("以下の文字で状態遷移"+ch);
 				if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
 				} else if (ch == (char) -1) {	// EOF
 					System.out.println("EOF処理に移動");
@@ -244,7 +244,6 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				break;
 			case 10://16進数と8進数の処理
 				 ch = readChar();
-				 System.out.println("いま読んだのはなんだ"+ch);
                  if (ch == 'x' || (ch >= '0' && ch <= '9')) {
                      startCol = colNo - 1;
                      isNum = true;

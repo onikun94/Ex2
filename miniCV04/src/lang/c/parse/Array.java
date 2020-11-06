@@ -21,6 +21,7 @@ public class Array extends CParseRule {
 
     @Override
     public void parse(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("Arrayのparse実行");
         CTokenizer ct = pcx.getTokenizer();
         ct.getNextToken(pcx);
         expression = new Expression(pcx);
@@ -35,6 +36,7 @@ public class Array extends CParseRule {
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("ArrayのsemanticCheck実行");
         if (expression != null) {
             expression.semanticCheck(pcx);
             CType ty = expression.getCType();
@@ -48,6 +50,7 @@ public class Array extends CParseRule {
 
     @Override
     public void codeGen(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("ArrayのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; array starts");
         if (expression != null) {

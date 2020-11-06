@@ -20,6 +20,7 @@ public class Variable extends CParseRule {
 
     @Override
     public void parse(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("Variableのparse実行");
         identArray = new Ident(pcx);
         identArray.parse(pcx);
 		CTokenizer ct = pcx.getTokenizer();
@@ -36,6 +37,7 @@ public class Variable extends CParseRule {
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("VariableのsemanticCheck実行");
         if (identArray != null) {
             identArray.semanticCheck(pcx);
             this.setCType(identArray.getCType());
@@ -45,6 +47,7 @@ public class Variable extends CParseRule {
 
     @Override
     public void codeGen(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("VariableのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; variable starts");
         if (identArray != null) {

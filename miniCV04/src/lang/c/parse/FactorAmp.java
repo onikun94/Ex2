@@ -35,14 +35,11 @@ public class FactorAmp extends CParseRule {
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		System.out.println("FactorAmpのsemanticCheck実行");
-		/*final int s[] = {
-        //		T_err			T_int              T_pint
-				CType.T_err,    CType.T_pint,      CType.T_err
-		};*/
 		final int s[] = {
-		        //		T_err			T_int
-						CType.T_err,    CType.T_pint
+        //		T_err			T_int              T_pint            T_int_arr
+				CType.T_err,    CType.T_pint,      CType.T_err,      CType.T_pint_arr,
 		};
+
 		if (numType != null ) {
 			numType.semanticCheck(pcx);
 

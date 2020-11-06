@@ -19,6 +19,7 @@ public class Primary extends CParseRule {
 
     @Override
     public void parse(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("Primaryのparse実行");
         CTokenizer ct = pcx.getTokenizer();
         CToken op = ct.getCurrentToken(pcx);
 
@@ -33,6 +34,7 @@ public class Primary extends CParseRule {
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("PrimaryのsemanticCheck実行");
         if (child != null) {
             child.semanticCheck(pcx);
             this.setCType(child.getCType());
@@ -42,6 +44,7 @@ public class Primary extends CParseRule {
 
     @Override
     public void codeGen(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("PrimaryのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; primary starts");
         if (child != null) {

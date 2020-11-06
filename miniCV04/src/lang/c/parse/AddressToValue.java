@@ -19,12 +19,14 @@ public class AddressToValue extends CParseRule {
 
     @Override
     public void parse(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("AddressToValueのparse実行");
         primary = new Primary(pcx);
         primary.parse(pcx);
     }
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("AddressToValueのsemanticCheck実行");
         if (primary != null) {
             primary.semanticCheck(pcx);
             this.setCType(primary.getCType());
@@ -34,6 +36,7 @@ public class AddressToValue extends CParseRule {
 
     @Override
     public void codeGen(CParseContext pcx) throws FatalErrorException {
+    	System.out.println("AddressToValueのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; addresstovalue starts");
         if (primary != null) {

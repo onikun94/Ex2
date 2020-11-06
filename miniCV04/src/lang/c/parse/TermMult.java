@@ -6,7 +6,6 @@ import lang.FatalErrorException;
 import lang.c.CParseContext;
 import lang.c.CParseRule;
 import lang.c.CToken;
-import lang.c.CTokenizer;
 import lang.c.CType;
 
 public class TermMult extends CParseRule {
@@ -20,8 +19,8 @@ public class TermMult extends CParseRule {
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		System.out.println("Termのparse実行");
 		// ここにやってくるときは、必ずisFirst()が満たされている
-        CTokenizer ct = pcx.getTokenizer();
-        CToken tk = ct.getCurrentToken(pcx);
+        //CTokenizer ct = pcx.getTokenizer();
+        //CToken tk = ct.getCurrentToken(pcx);
 		factor = new Factor(pcx);
 		factor.parse(pcx);
 	}
