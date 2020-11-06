@@ -26,6 +26,7 @@ public class Expression extends CParseRule {
 		term.parse(pcx);
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
+		System.out.println("ct ========"+ct);
 		while (ExpressionAdd.isFirst(tk)|| ExpressionSub.isFirst(tk)) {
 			if(tk.getType() == CToken.TK_PLUS) {
 				System.out.println("expressionの＋");
