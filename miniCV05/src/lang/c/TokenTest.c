@@ -1,12 +1,2 @@
-// Ž¯•ÊŽq‚ª‚¤‚Ü‚­Ø‚èo‚¹‚é‚©A‚P•¶Žš‹L†‚ÌŽš‹å‚ªÁ‚¦‚Ä‚¢‚È‚¢‚©AŠm”F
+i_a/*comment*/=4;		// ã“ã‚Œã¯ã€Œi_a=4;ã€ã€‚= ãŒæ¶ˆãˆã¦ãªããªã£ã¦ã„ãªã„ã‹ï¼Ÿ
 
-abc+-def[ghij+*k]lmn
-// abc + - def [ ghij + * k ] lmn     ‚Ì‚Í‚¸B + ‚ ‚½‚è‚ªÁ‚¦‚Ä‚È‚­‚È‚Á‚Ä‚¢‚È‚¢‚©H
-
-ab0c+-1def[gh2ij+*k3]4lm5n
-// ab0c + - 1 def [ gh2ij + * k3 ] 4 lm5n@@@‚Ì‚Í‚¸B
-// + ] ‚ªÁ‚¦‚Ä‚È‚­‚È‚Á‚Ä‚¢‚È‚¢‚©H@lm5n ‚Ì l ‚ªÁ‚¦‚Ä‚È‚­‚È‚Á‚Ä‚¢‚È‚¢‚©H
-
-
-i_a ip_a ia_a ipa_a
-// _ ‚ª‰pŽš‚Ìˆµ‚¢‚ðŽó‚¯‚Ä‚¢‚é‚©H
