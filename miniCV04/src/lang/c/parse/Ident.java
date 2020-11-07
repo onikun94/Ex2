@@ -49,7 +49,10 @@ public class Ident extends CParseRule {
     		System.out.println("ipa_のときのT_pint_arrの処理");
 
     	}else if(ident.getText().startsWith("c_")) {
+    		this.setCType(CType.getCType(CType.T_int));
     		this.setConstant(true);
+    	}else {
+    		   this.setCType(CType.getCType(CType.T_err));
     	}
 
 
