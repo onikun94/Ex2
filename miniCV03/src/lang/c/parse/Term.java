@@ -1,5 +1,6 @@
 package lang.c.parse;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import lang.FatalErrorException;
@@ -74,6 +75,19 @@ public class Term extends CParseRule {
 	    }
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
-
+		System.out.println("TermのcodeGen実行");
+		PrintStream o = pcx.getIOContext().getOutStream();
+		o.println(";;; term starts");
+		if (termMultDiv != null) {
+            termMultDiv.stream()
+                    .forEach(term -> {
+                        try {
+                            term.codeGen(pcx);
+                        } catch (FatalErrorException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }
+		o.println(";;; term completes");
 	}
 }

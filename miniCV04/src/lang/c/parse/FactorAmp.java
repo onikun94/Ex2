@@ -10,7 +10,7 @@ import lang.c.CType;
 public class FactorAmp extends CParseRule {
 	// term ::= factor
 	//private CToken op;
-	private CParseRule numType;
+	private CParseRule numPrime;
 
 	public FactorAmp(CParseContext pcx) {
 	}
@@ -24,11 +24,11 @@ public class FactorAmp extends CParseRule {
         CToken tk = ct.getNextToken(pcx);
 
         if(tk.getType() == CToken.TK_NUM) {
-        	numType = new Number(pcx);
-        	numType.parse(pcx);
+        	numPrime = new Number(pcx);
+        	numPrime.parse(pcx);
         } else {
-        	numType = new Primary(pcx);
-        	numType.parse(pcx);
+        	numPrime = new Primary(pcx);
+        	numPrime.parse(pcx);
         }
 
 	}
@@ -40,21 +40,21 @@ public class FactorAmp extends CParseRule {
 				CType.T_err,    CType.T_pint,      CType.T_err,      CType.T_pint_arr,
 		};
 
-		if (numType != null ) {
-	            if (numType instanceof Primary) {
-	                if (((Primary) numType).isMultPrimary) {
+		if (numPrime != null ) {
+	            if (numPrime instanceof Primary) {
+	                if (((Primary) numPrime).isMultPrimary) {
 	                    pcx.fatalError("&の後ろに*は付けられません");
 	                }
 	            }
-			numType.semanticCheck(pcx);
+			numPrime.semanticCheck(pcx);
 
-			int tp = numType.getCType().getType();
+			int tp = numPrime.getCType().getType();
 			int nt = s[tp];						// 規則による型計算
 			if (nt == CType.T_err) {
 				pcx.fatalError(tp+ "適切ではありません");
 			}
 			this.setCType(CType.getCType(nt));
-			this.setConstant(numType.isConstant());
+			this.setConstant(numPrime.isConstant());
 		}
 
 	}
@@ -62,6 +62,6 @@ public class FactorAmp extends CParseRule {
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
 		System.out.println("FactorAmpのcodeGen実行");
-		numType.codeGen(pcx);
+		numPrime.codeGen(pcx);
 	}
 }
