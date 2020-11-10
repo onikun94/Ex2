@@ -1,12 +1,10 @@
-// Ž¯•ÊŽq‚ª‚¤‚Ü‚­Ø‚èo‚¹‚é‚©A‚P•¶Žš‹L†‚ÌŽš‹å‚ªÁ‚¦‚Ä‚¢‚È‚¢‚©AŠm”F
-
 abc+-def[ghij+*k]lmn
-// abc + - def [ ghij + * k ] lmn     ‚Ì‚Í‚¸B + ‚ ‚½‚è‚ªÁ‚¦‚Ä‚È‚­‚È‚Á‚Ä‚¢‚È‚¢‚©H
+// abc + - def [ ghij + * k ] lmn     ï¿½Ì‚Í‚ï¿½ï¿½B + ï¿½ï¿½ï¿½ï¿½ï¿½è‚ªï¿½ï¿½ï¿½ï¿½ï¿½Ä‚È‚ï¿½ï¿½È‚ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½H
 
 ab0c+-1def[gh2ij+*k3]4lm5n
-// ab0c + - 1 def [ gh2ij + * k3 ] 4 lm5n@@@‚Ì‚Í‚¸B
-// + ] ‚ªÁ‚¦‚Ä‚È‚­‚È‚Á‚Ä‚¢‚È‚¢‚©H@lm5n ‚Ì l ‚ªÁ‚¦‚Ä‚È‚­‚È‚Á‚Ä‚¢‚È‚¢‚©H
+// ab0c + - 1 def [ gh2ij + * k3 ] 4 lm5nï¿½@ï¿½@ï¿½@ï¿½Ì‚Í‚ï¿½ï¿½B
+// + ] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚È‚ï¿½ï¿½È‚ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Hï¿½@lm5n ï¿½ï¿½ l ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚È‚ï¿½ï¿½È‚ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½H
 
 
 i_a ip_a ia_a ipa_a
-// _ ‚ª‰pŽš‚Ìˆµ‚¢‚ðŽó‚¯‚Ä‚¢‚é‚©H
+// _ ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó‚¯‚Ä‚ï¿½ï¿½é‚©ï¿½H

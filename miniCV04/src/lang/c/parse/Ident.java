@@ -24,6 +24,9 @@ public class Ident extends CParseRule {
     	System.out.println("Identのparse実行");
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
+        if (tk.getType() != CToken.TK_IDENT) {
+            pcx.fatalError("識別子がありません");
+        }
         ident = tk;
         ct.getNextToken(pcx);
     }

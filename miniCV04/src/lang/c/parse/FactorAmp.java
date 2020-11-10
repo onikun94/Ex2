@@ -51,7 +51,7 @@ public class FactorAmp extends CParseRule {
 			int tp = numPrime.getCType().getType();
 			int nt = s[tp];						// 規則による型計算
 			if (nt == CType.T_err) {
-				pcx.fatalError(tp+ "適切ではありません");
+				pcx.fatalError(tp+ "適切な型ではありません");
 			}
 			this.setCType(CType.getCType(nt));
 			this.setConstant(numPrime.isConstant());

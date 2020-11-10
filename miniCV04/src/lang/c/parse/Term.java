@@ -1,5 +1,6 @@
 package lang.c.parse;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import lang.FatalErrorException;
@@ -24,11 +25,11 @@ public class Term extends CParseRule {
 		// ここにやってくるときは、必ずisFirst()が満たされている
 		CParseRule factor = new Factor(pcx);
 		factor.parse(pcx);
+
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
+		termMultDiv.add(factor);
 
-		 termMultDiv.add(factor);
-		 //System.out.println("ternMultDiv = "+termMultDiv.size());
 		while (TermMult.isFirst(tk) || TermDiv.isFirst(tk)) {
 		  if(tk.getType() == CToken.TK_MUL) {
 			  multDiv = new TermMult(pcx);
@@ -42,6 +43,7 @@ public class Term extends CParseRule {
 			  termMultDiv.add(multDiv);
 		  }
 		}
+
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
@@ -51,6 +53,7 @@ public class Term extends CParseRule {
 	            for (int i = 0; i + 1 <= termMultDiv.size() - 1; i++) {
 	                CParseRule left = termMultDiv.get(i);
 	                CParseRule right = termMultDiv.get(i + 1);
+	                //System.out.println("left="+left+"right="+right);
 	                left.semanticCheck(pcx);
 	                right.semanticCheck(pcx);
 	                int leftType = left.getCType().getType();
@@ -74,6 +77,19 @@ public class Term extends CParseRule {
 	    }
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
-
+		System.out.println("TermのcodeGen実行");
+		PrintStream o = pcx.getIOContext().getOutStream();
+		o.println(";;; term starts");
+		if (termMultDiv != null) {
+            termMultDiv.stream()
+                    .forEach(term -> {
+                        try {
+                            term.codeGen(pcx);
+                        } catch (FatalErrorException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }
+		o.println(";;; term completes");
 	}
 }

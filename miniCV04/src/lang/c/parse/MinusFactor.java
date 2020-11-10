@@ -39,7 +39,7 @@ public class MinusFactor extends CParseRule {
             this.setConstant(unsignedFactor.isConstant());
             int type = unsignedFactor.getCType().getType();
             if (type == CType.T_pint) {
-                pcx.fatalError("ポインタNG");
+                pcx.fatalError("ポインタに-はつけれません");
             }
         }
     }
