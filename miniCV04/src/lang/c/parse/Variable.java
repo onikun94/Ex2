@@ -42,7 +42,9 @@ public class Variable extends CParseRule {
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
     	System.out.println("VariableのsemanticCheck実行");
-    	final int Arr = identArray.getCType().getType();
+    	System.out.println(identArray);
+    	final int Arr = identArray.getCType().getType();//ここでとまっている
+    	System.out.println("ttttttt");
 
         if (identArray != null) {
             identArray.semanticCheck(pcx);
