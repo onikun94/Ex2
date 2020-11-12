@@ -42,8 +42,10 @@ public class Primary extends CParseRule {
     	System.out.println("PrimaryのsemanticCheck"+mulVar);
         if (mulVar != null) {
             mulVar.semanticCheck(pcx);
+            System.out.println("aokaogjrai");
             this.setCType(mulVar.getCType());
             this.setConstant(mulVar.isConstant());
+            System.out.println("aokaogjrai");
         }
     }
 
