@@ -44,6 +44,7 @@ public class PrimaryMult extends CParseRule {
         if (child != null) {
             child.semanticCheck(pcx);
             final int  tp = child.getCType().getType();
+            System.out.println("childは"+child+"に遷移");
             if (tp == CType.T_int) {
                 pcx.fatalError("数値は参照できません");
             } else if (tp == CType.T_pint) {

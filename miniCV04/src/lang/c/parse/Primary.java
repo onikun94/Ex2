@@ -23,7 +23,7 @@ public class Primary extends CParseRule {
     	System.out.println("Primaryのparse実行");
         CTokenizer ct = pcx.getTokenizer();
         CToken op = ct.getCurrentToken(pcx);
-        System.out.println("PrimaryText =="+op.getText());
+        System.out.println("PrimaryTextのトークンの綴りは"+op.getText());
 
         if (op.getType() == CToken.TK_MUL) {
             mulVar = new PrimaryMult(pcx);

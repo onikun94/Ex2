@@ -28,8 +28,8 @@ public class Variable extends CParseRule {
 
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
-		/*System.out.println("VariableText =="+tk.getText());
-		System.out.println("tk.getType =="+tk.getType());
+		System.out.println("VariableTextのトークンの綴りは"+tk.getText());
+		/*System.out.println("tk.getType =="+tk.getType());
 		System.out.println("CToken.TKLBRA =="+CToken.TK_LBRA);*/
 
         if (Array.isFirst(tk)) {
@@ -44,7 +44,7 @@ public class Variable extends CParseRule {
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
     	System.out.println("VariableのsemanticCheck実行");
-    	System.out.println(ident);
+    	System.out.println("変数identは"+ident+"に遷移");
     	//final int Arr = array.getCType().getType();//ここでとまっている
 
 
@@ -55,30 +55,35 @@ public class Variable extends CParseRule {
 
             this.setConstant(ident.isConstant());
 
-            System.out.println(array);
+            System.out.println("変数arrayは"+array+"に遷移");
 
-            System.out.println(ident.getCType().getType());
+            System.out.println("識別子の型は"+ident.getCType().getType());
 
-            if(array != null) {
+              if ((ident.getCType().getType() == CType.T_int_arr) || (ident.getCType().getType() == CType.T_pint_arr)) {
+            	  if(ident.getCType().getType() == CType.T_int_arr) {
+            		  System.out.println("配列がint型の場合");
+                	  if(array == null) {
+                		  pcx.fatalError("array型に[]が指定されていません");
+                	  }
+                	  //ArrayのsemanticCheck
+                	  array.semanticCheck(pcx);
+                	  //ArrayのsetType
+                	  this.setCType(CType.getCType(CType.T_int));
 
-              if ((ident.getCType().getType() != CType.T_int_arr) || (ident.getCType().getType() != CType.T_pint_arr)) {
-                  pcx.fatalError("arrayに識別子が指定されていません");
+                  }else if(ident.getCType().getType() == CType.T_pint_arr) {
+                	  System.out.println("配列がpint型の場合");
+                	  if(array == null) {
+                		  pcx.fatalError("array型に[]が指定されていません");
+                	  }
+                	  array.semanticCheck(pcx);
+                	  this.setCType(CType.getCType(CType.T_pint));
+                  }
+
               }
 
-              if(ident.getCType().getType() == CType.T_int_arr) {
-            	  //ArrayのsemanticCheck
-            	  array.semanticCheck(pcx);
-            	  //ArrayのsetType
-            	  this.setCType(CType.getCType(CType.T_int));
-
-              }else if(ident.getCType().getType() == CType.T_pint_arr) {
-
-            	  array.semanticCheck(pcx);
-            	  this.setCType(CType.getCType(CType.T_pint));
+              if((ident.getCType().getType() == CType.T_pint)) {
+            	  pcx.fatalError("配列の識別子はint[]型かint*[]型でないといけません");
               }
-
-            }
-
 
         }
         System.out.println("Variableのsemantic終了");
