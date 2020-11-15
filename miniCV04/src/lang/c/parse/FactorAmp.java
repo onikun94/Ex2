@@ -1,5 +1,7 @@
 package lang.c.parse;
 
+import java.io.PrintStream;
+
 import lang.FatalErrorException;
 import lang.c.CParseContext;
 import lang.c.CParseRule;
@@ -67,6 +69,10 @@ public class FactorAmp extends CParseRule {
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
 		System.out.println("FactorAmpのcodeGen実行");
+		PrintStream o = pcx.getIOContext().getOutStream();
+		o.println(";;; factorAmp starts");
+		// factorAmp object will generate address
 		numPrime.codeGen(pcx);
+		o.println(";;; factorAmp completes");
 	}
 }

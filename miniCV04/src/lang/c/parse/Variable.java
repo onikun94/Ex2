@@ -103,8 +103,9 @@ public class Variable extends CParseRule {
     	System.out.println("VariableのcodeGen実行");
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; variable starts");
-        if (ident != null) {
-            ident.codeGen(pcx);
+        ident.codeGen(pcx);
+        if (array != null) {
+            array.codeGen(pcx);
             o.println("\tMOV\t-(R6), R1\t; Arrayのexprの値をスタックへ");
 			o.println("\tMOV\t-(R6), R0\t; Identのアドレスをポップ");
 			o.println("\tADD\tR1, R0   \t; Variableのアドレス値を計算");
