@@ -25,7 +25,7 @@ public class AddressToValue extends CParseRule {
 
         CTokenizer ct = pcx.getTokenizer();
         op = ct.getCurrentToken(pcx);
-        System.out.println("PrimaryText =="+op.getText());
+        System.out.println("PrimaryText(AddressToValue.java) =="+op.getText());
 
         primary = new Primary(pcx);
         primary.parse(pcx);

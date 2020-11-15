@@ -332,16 +332,16 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 
 				}
                  break;
+
             case 19:
-            	System.out.println("=についての処理");
-            	tk = new CToken(CToken.TK_ASSIGN, lineNo, startCol, "=");
-                accept = true;
-                break;
+                 tk = new CToken(CToken.TK_ASSIGN, lineNo, startCol, "=");
+                 accept = true;
+                 break;
+
             case 20:
                 tk = new CToken(CToken.TK_SEMI, lineNo, startCol, ";");
                 accept = true;
                 break;
-
 
 			}
 

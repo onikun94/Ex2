@@ -11,7 +11,7 @@ import lang.c.CType;
 
 public class PrimaryMult extends CParseRule {
 	private CToken op;
-	private CToken tk;
+	//private CToken tk;
     private CParseRule child;
 
     public PrimaryMult(CParseContext pcx) {
@@ -25,13 +25,13 @@ public class PrimaryMult extends CParseRule {
     public void parse(CParseContext pcx) throws FatalErrorException {
     	System.out.println("PrimaryMultのparse実行");
         CTokenizer ct = pcx.getTokenizer();
-        tk = ct.getCurrentToken(pcx);
-        System.out.println("tk.getType_Primarrytk =="+tk.getType());
+        //tk = ct.getCurrentToken(pcx);
+        //System.out.println("tk.getType_Primarrytk =="+tk.getType());
         op = ct.getNextToken(pcx);
-        System.out.println("tk.getType_Primarry =="+op.getType());
+        //System.out.println("tk.getType_Primarry =="+op.getType());
         if (!Ident.isFirst(op)) {
             pcx.fatalError(
-              String.format("[%s]*(ポインタ)演算子の後ろは識別子", op.toExplainString()));
+              String.format("[%s]*(ポインタ)の後ろは識別子です", op.toExplainString()));
         }
         child = new Variable(pcx);
         child.parse(pcx);
@@ -44,8 +44,9 @@ public class PrimaryMult extends CParseRule {
         if (child != null) {
             child.semanticCheck(pcx);
             final int  tp = child.getCType().getType();
+            System.out.println("childは"+child+"に遷移");
             if (tp == CType.T_int) {
-                pcx.fatalError("参照できません");
+                pcx.fatalError("数値は参照できません");
             } else if (tp == CType.T_pint) {
                 this.setCType(CType.getCType(CType.T_int));
             }
