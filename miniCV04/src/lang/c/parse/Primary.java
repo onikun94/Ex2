@@ -10,7 +10,7 @@ import lang.c.CTokenizer;
 
 public class Primary extends CParseRule {
     private CParseRule mulVar;
-    public boolean isMultPrimary = false;
+    public static boolean isMultPrimary = false;
     public Primary(CParseContext pcx) {
     }
 

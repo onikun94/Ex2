@@ -62,7 +62,10 @@ public class Variable extends CParseRule {
               if ((ident.getCType().getType() == CType.T_int_arr) || (ident.getCType().getType() == CType.T_pint_arr)) {
             	  if(ident.getCType().getType() == CType.T_int_arr) {
             		  System.out.println("配列がint型の場合");
-                	  if(array == null) {
+                   	  if(Primary.isMultPrimary == true) {
+                		  pcx.fatalError("*ia_a		// 不当(Cでは正当)");
+                	  }
+            		  else if(array == null) {
                 		  pcx.fatalError("array型に[]が指定されていません");
                 	  }
                 	  //ArrayのsemanticCheck
@@ -72,7 +75,10 @@ public class Variable extends CParseRule {
 
                   }else if(ident.getCType().getType() == CType.T_pint_arr) {
                 	  System.out.println("配列がpint型の場合");
-                	  if(array == null) {
+                	  if(Primary.isMultPrimary == true) {
+                		  pcx.fatalError("*ipa_a		// 不当(Cでは正当)");
+                	  }
+                	  else if(array == null) {
                 		  pcx.fatalError("array型に[]が指定されていません");
                 	  }
                 	  array.semanticCheck(pcx);
@@ -81,9 +87,12 @@ public class Variable extends CParseRule {
 
               }
 
-              if((ident.getCType().getType() == CType.T_pint)) {
-            	  pcx.fatalError("配列の識別子はint[]型かint*[]型でないといけません");
+              if(array != null) {
+                  if((ident.getCType().getType() == CType.T_pint ) ||(ident.getCType().getType() == CType.T_int )) {
+                	  pcx.fatalError("配列の識別子はint[]型かint*[]型でないといけません");
+                  }
               }
+
 
         }
         System.out.println("Variableのsemantic終了");
