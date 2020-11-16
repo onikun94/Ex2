@@ -52,6 +52,21 @@ public class StatementAssign extends CParseRule {
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		System.out.println("StatementAssignのsemanticCheck実行");
+		if (primary != null) {
+            primary.semanticCheck(pcx);
+        }
+        if (expression != null) {
+            expression.semanticCheck(pcx);
+        }
+        if(primary.getCType().getType() != expression.getCType().getType()) {
+        	pcx.fatalError(String.format("左辺の型[%s]と右辺の型[%s]が一致しません\n",
+        			primary.getCType().toString(), expression.getCType().toString()));
+        }
+
+        if(primary.isConstant()) {
+        	pcx.fatalError("定数には値を代入できません");
+        }
+
 
 	}
 

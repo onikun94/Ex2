@@ -22,7 +22,9 @@ public class Statement extends CParseRule {
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		System.out.println("TermのsemanticCheck実行");
-
+		 if (statementAssign != null) {
+	            statementAssign.semanticCheck(pcx);
+	        }
 
 	}
 
