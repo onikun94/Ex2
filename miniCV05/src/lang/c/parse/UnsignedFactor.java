@@ -23,6 +23,7 @@ public class UnsignedFactor extends CParseRule {
 		System.out.println("UnsignedFactorのparse実行");
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
+		System.out.println("UnsignedFactorのトークンの綴りは"+tk.getText());
 		if(tk.getType() == CToken.TK_AMP) {
 			unsignedFactor = new FactorAmp(pcx);
 			unsignedFactor.parse(pcx);

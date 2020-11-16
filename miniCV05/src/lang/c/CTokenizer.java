@@ -145,7 +145,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				}
 				break;
 			case 1:					// EOFを読んだ
-				System.out.println("case1");
+				System.out.println("EOFについての処理");
 				tk = new CToken(CToken.TK_EOF, lineNo, startCol, "end_of_file");
 				accept = true;
 				break;
@@ -154,7 +154,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				accept = true;
 				break;
 			case 3:					// 数（10進数）の開始
-				System.out.println("3番に移動");
+				System.out.println("10進数についての処理");
 				ch = readChar();
 				System.out.println(text.toString());
 
@@ -251,6 +251,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				}
 				break;
 			case 10://16進数と8進数の処理
+				System.out.println("16進数と8進数についての処理");
 				 ch = readChar();
                  if (ch == 'x' || (ch >= '0' && ch <= '9')) {
                      startCol = colNo - 1;
@@ -260,11 +261,12 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                      state = 3;
                  } else {
                 	 System.out.println("数字以外のとき");
-                	 if(ch == (char) -1) {
+                	 /*if(ch == (char) -1) {
+                		 System.out.println("読まなかったことにする");
                          backChar(ch); //読まなかったことにする
                          state = 1;
-                	 }
-                     //backChar(ch);
+                	 }*/
+                     backChar(ch);
                      System.out.println(text.toString());
                      tk = new CToken(CToken.TK_NUM, lineNo, startCol, text.toString());
 
@@ -334,11 +336,13 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                  break;
 
             case 19:
+            	System.out.println("=についての処理");
                  tk = new CToken(CToken.TK_ASSIGN, lineNo, startCol, "=");
                  accept = true;
                  break;
 
             case 20:
+            	System.out.println(";についての処理");
                 tk = new CToken(CToken.TK_SEMI, lineNo, startCol, ";");
                 accept = true;
                 break;

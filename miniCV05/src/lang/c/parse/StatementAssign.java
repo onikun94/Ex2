@@ -19,13 +19,17 @@ public class StatementAssign extends CParseRule {
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		System.out.println("StatementAssignのparse実行");
 
+		CTokenizer ct = pcx.getTokenizer();
 		/*primaryのparse*/
 		primary = new Primary(pcx);
 		primary.parse(pcx);
+		System.out.println("Primaryの解析終了");
 
-		CTokenizer ct = pcx.getTokenizer();
+
 		CToken tk = ct.getCurrentToken(pcx);
+		System.out.println("StatementAssignのトークンの綴りは"+tk.getText());
 
+		//System.out.println("tkは"+tk.getType());
 		if(tk.getType() != CToken.TK_ASSIGN) {
 			pcx.fatalError(tk.toExplainString() + "primaryの後には=がきます");
 		}
@@ -35,10 +39,12 @@ public class StatementAssign extends CParseRule {
 		/*expressionのparse*/
 		expression = new Expression(pcx);
 		expression.parse(pcx);
-		tk = ct.getCurrentToken(pcx);
+		System.out.println("Expressionの解析終了");
+
+		tk = ct.getCurrentToken(pcx);//ここでエラー
 
 		if(tk.getType() != CToken.TK_SEMI) {
-			 pcx.fatalError(tk.toExplainString() + ";がありません");
+			 pcx.fatalError(";がありません");
 		}
 
 		ct.getNextToken(pcx);

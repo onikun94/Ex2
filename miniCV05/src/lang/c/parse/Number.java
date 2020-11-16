@@ -22,8 +22,9 @@ public class Number extends CParseRule {
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
 		num = tk;
+		System.out.println("Number0Textのトークンの綴りは"+tk.getText());
 		tk = ct.getNextToken(pcx);
-
+		System.out.println("NumberTextのトークンの綴りは"+tk.getText());
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
