@@ -22,8 +22,8 @@ public class MiniCompiler {
 					parseTree.semanticCheck(pcx);		// 意味解析
 				}
 				if (pcx.hasNoError()) {
-					/*System.out.println("MiniCompilerのcodeGen実行");
-					parseTree.codeGen(pcx);    // コード生成*/
+					System.out.println("MiniCompilerのcodeGen実行");
+					parseTree.codeGen(pcx);    // コード生成
 				}
 				pcx.errorReport();
 			} else {

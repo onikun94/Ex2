@@ -1,5 +1,7 @@
 package lang.c.parse;
 
+import java.io.PrintStream;
+
 import lang.FatalErrorException;
 import lang.c.CParseContext;
 import lang.c.CParseRule;
@@ -72,6 +74,18 @@ public class StatementAssign extends CParseRule {
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
 		System.out.println("StatementAssignのcodeGen実行");
+		PrintStream o = pcx.getIOContext().getOutStream();
+		 o.println(";;; StatementAssign starts");
+	        if (primary != null) {
+	            primary.codeGen(pcx);
+	        }
+	        if (expression != null) {
+	            expression.codeGen(pcx);
+	        }
+	        o.println("\tMOV\t-(R6), R1\t; StatementAssign: Expressionの値を取り出す");
+	        o.println("\tMOV\t-(R6), R0\t; StatementAssign: 変数のアドレスを取り出す");
+	        o.println("\tMOV\t   R1, (R0)\t; StatementAssign: 変数に値を代入する");
+	        o.println(";;; StatementAssign completes");
 
 	}
 }

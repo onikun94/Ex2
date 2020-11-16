@@ -1,5 +1,7 @@
 package lang.c.parse;
 
+import java.io.PrintStream;
+
 import lang.FatalErrorException;
 import lang.c.CParseContext;
 import lang.c.CParseRule;
@@ -30,6 +32,11 @@ public class Statement extends CParseRule {
 
 	public void codeGen(CParseContext pcx) throws FatalErrorException {
 		System.out.println("TermのcodeGen実行");
-
-	}
+		PrintStream o = pcx.getIOContext().getOutStream();
+        o.println(";;; Statement starts");
+        if (statementAssign != null) {
+            statementAssign.codeGen(pcx);
+        }
+        o.println(";;; Statement completes");
+    }
 }
