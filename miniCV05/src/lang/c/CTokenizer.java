@@ -279,7 +279,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
 				accept = true;
 				break;
 			case 12 :
-				System.out.print("*についての処理");
+				System.out.println("*についての処理");
                 tk = new CToken(CToken.TK_MUL, lineNo, startCol, "*");
                 accept = true;
                 break;

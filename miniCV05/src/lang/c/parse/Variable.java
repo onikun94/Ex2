@@ -62,7 +62,7 @@ public class Variable extends CParseRule {
               if ((ident.getCType().getType() == CType.T_int_arr) || (ident.getCType().getType() == CType.T_pint_arr)) {
             	  if(ident.getCType().getType() == CType.T_int_arr) {
             		  System.out.println("配列がint型の場合");
-                   	  if(Primary.isMultPrimary == true) {
+                   	  if(array == null && Primary.isMultPrimary == true) {
                 		  pcx.fatalError("*ia_a		// 不当(Cでは正当)");
                 	  }
             		  else if(array == null) {
@@ -73,7 +73,7 @@ public class Variable extends CParseRule {
                 	  //ArrayのsetType
                 	  this.setCType(CType.getCType(CType.T_int));
 
-                  }else if(ident.getCType().getType() == CType.T_pint_arr) {
+                  }else if(array == null && getCType().getType() == CType.T_pint_arr) {
                 	  System.out.println("配列がpint型の場合");
                 	  if(Primary.isMultPrimary == true) {
                 		  pcx.fatalError("*ipa_a		// 不当(Cでは正当)");

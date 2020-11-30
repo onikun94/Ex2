@@ -42,9 +42,10 @@ public class StatementAssign extends CParseRule {
 		expression = new Expression(pcx);
 		expression.parse(pcx);
 		System.out.println("Expressionの解析終了");
-
+		//System.out.println("check1");
 		tk = ct.getCurrentToken(pcx);//ここでエラー
-
+		//System.out.println("check2");
+		//ip_a=&1;*ip_a=1;の例実行時、*が乗算として処理されている.
 		if(tk.getType() != CToken.TK_SEMI) {
 			 pcx.fatalError(";がありません");
 		}
@@ -55,9 +56,11 @@ public class StatementAssign extends CParseRule {
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
 		System.out.println("StatementAssignのsemanticCheck実行");
 		if (primary != null) {
+			System.out.println("Primaryのsemantic実行");
             primary.semanticCheck(pcx);
         }
         if (expression != null) {
+        	System.out.println("expressionのsemantic実行");
             expression.semanticCheck(pcx);
         }
         if(primary.getCType().getType() != expression.getCType().getType()) {
