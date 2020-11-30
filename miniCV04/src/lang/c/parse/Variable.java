@@ -62,7 +62,7 @@ public class Variable extends CParseRule {
               if ((ident.getCType().getType() == CType.T_int_arr) || (ident.getCType().getType() == CType.T_pint_arr)) {
             	  if(ident.getCType().getType() == CType.T_int_arr) {
             		  System.out.println("配列がint型の場合");
-                   	  if(Primary.isMultPrimary == true) {
+                   	  if( array == null &&  Primary.isMultPrimary == true) {
                 		  pcx.fatalError("ポインタの識別子はint*型かint*[]型でないといけません");
                 	  }
             		  else if(array == null) {
@@ -75,7 +75,8 @@ public class Variable extends CParseRule {
 
                   }else if(ident.getCType().getType() == CType.T_pint_arr) {
                 	  System.out.println("配列がpint型の場合");
-                	  if(Primary.isMultPrimary == true) {
+
+                	  if(array == null && Primary.isMultPrimary == true) {
                 		  pcx.fatalError("ポインタの識別子はint*型かint*[]型でないといけません");
                 	  }
                 	  else if(array == null) {
