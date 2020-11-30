@@ -42,7 +42,7 @@ public class Ident extends CParseRule {
 
     	}else if(ident.getText().startsWith("ip_")) {
     		if(FactorAmp.isAddress == true) {
-    			pcx.fatalError("ポインタのアドレスは許しません");
+    			pcx.fatalError("ポインタのポインタは許しません");
     		}
     		this.setCType(CType.getCType(CType.T_pint));
     		System.out.println("ip_のときのT_pintの処理");
