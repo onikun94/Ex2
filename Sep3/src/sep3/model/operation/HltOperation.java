@@ -13,7 +13,7 @@ public class HltOperation extends Operation {
 		// Sバスには、Aバスの値をそのまま渡す（Aバスは使わないので0になっている）
 		cpu.getSBus().setValue(cpu.getABus().getValue());
 
-		// Sバスの値は捨てる
+		// Sバスの値は捨てる//(実験Ⅲで確認)
 		writeBack(true);
 
 		// HLT状態にする(フラグを立てる)
