@@ -148,8 +148,15 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                     startCol = colNo - 1;
                     text.append(ch);
                     state = 23;
-                }
-                else {             // ヘンな文字を読んだ
+                } else if (ch == '{') {
+                    startCol = colNo - 1;
+                    text.append(ch);
+                    state = 24;
+                } else if (ch == '}') {
+                    startCol = colNo - 1;
+                    text.append(ch);
+                    state = 25;
+                } else {             // ヘンな文字を読んだ
                     startCol = colNo - 1;
                     text.append(ch);
                     state = 2;
@@ -335,13 +342,14 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                      text.append(ch);
                  }else {
                     try {
-                            //backChar(ch);
-                            //tk = new CToken(CToken.TK_IDENT, lineNo, startCol, text.toString());
-                            //accept = true;
-                            String s = text.toString();
+                            backChar(ch);
+                            tk = new CToken(CToken.TK_IDENT, lineNo, startCol, text.toString());
+                            accept = true;
+                    	    //ver06の処理
+                            /*String s = text.toString();
                             Integer i = (Integer) rule.get(s);
                             tk = new CToken(((i == null) ? CToken.TK_IDENT: i.intValue()), lineNo, startCol, s);
-                            accept = true;
+                            accept = true;*/
                             break;
                     } catch (NumberFormatException e) {
                         state = 2;
@@ -402,6 +410,19 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                     text.append(ch);
                     state = 2;
                 }
+                break;
+
+            case 24:
+                System.out.println("「{」の処理");
+                tk = new CToken(CToken.TK_LCUR, lineNo, startCol, "{");
+                accept = true;
+                break;
+
+
+            case 25:
+                System.out.println("「}」の処理");
+                tk = new CToken(CToken.TK_RCUR, lineNo, startCol, "}");
+                accept = true;
                 break;
             }
 

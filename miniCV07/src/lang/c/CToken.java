@@ -24,8 +24,8 @@ public class CToken extends SimpleToken {
     public static final int TK_NE            = 20;                // !=
     public static final int TK_TRUE          = 21;                // true
     public static final int TK_FALSE         = 22;                // false
-
-
+    public static final int TK_LCUR          = 23;                // {
+    public static final int TK_RCUR          = 24;                // }
 
 	public CToken(int type, int lineNo, int colNo, String s) {
 		super(type, lineNo, colNo, s);
