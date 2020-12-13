@@ -26,6 +26,7 @@ public class CToken extends SimpleToken {
     public static final int TK_FALSE         = 22;                // false
 
 
+
 	public CToken(int type, int lineNo, int colNo, String s) {
 		super(type, lineNo, colNo, s);
 	}

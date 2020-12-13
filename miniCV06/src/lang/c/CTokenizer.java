@@ -271,9 +271,9 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                      System.out.println("状態3に移行");
                      state = 3;
                  } else {
-                	 System.out.println("数字以外のとき");
-                	 /*if(ch == (char) -1) {
-                		 System.out.println("読まなかったことにする");
+                     System.out.println("数字以外のとき");
+                     /*if(ch == (char) -1) {
+                         System.out.println("読まなかったことにする");
                          backChar(ch); //読まなかったことにする
                          state = 1;
                 	 }*/
@@ -343,10 +343,8 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                             tk = new CToken(((i == null) ? CToken.TK_IDENT: i.intValue()), lineNo, startCol, s);
                             accept = true;
                             break;
-
-
                     } catch (NumberFormatException e) {
-                    	state = 2;
+                        state = 2;
                     }
 
                 }

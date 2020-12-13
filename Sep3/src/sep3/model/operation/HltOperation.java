@@ -16,7 +16,7 @@ public class HltOperation extends Operation {
 		// Sバスの値は捨てる
 		writeBack(true);
 
-		// HLT状態にする
+		// HLT状態にする(フラグを立てる)
 		cpu.getHaltLamp().on();
 	}
 }
