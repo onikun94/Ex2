@@ -335,7 +335,7 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                      text.append(ch);
                  }else {
                     try {
-                            //backChar(ch);
+                            backChar(ch);
                             //tk = new CToken(CToken.TK_IDENT, lineNo, startCol, text.toString());
                             //accept = true;
                             String s = text.toString();
