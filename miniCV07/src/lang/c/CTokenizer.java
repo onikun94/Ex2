@@ -343,9 +343,6 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                  }else {
                     try {
                             backChar(ch);
-                            //tk = new CToken(CToken.TK_IDENT, lineNo, startCol, text.toString());
-                            //accept = true;
-                    	    //ver06の処理
                             String s = text.toString();
                             Integer i = (Integer) rule.get(s);
                             tk = new CToken(((i == null) ? CToken.TK_IDENT: i.intValue()), lineNo, startCol, s);
