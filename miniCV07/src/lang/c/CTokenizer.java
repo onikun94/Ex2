@@ -413,14 +413,14 @@ public class CTokenizer extends Tokenizer<CToken, CParseContext> {
                 break;
 
             case 24:
-                System.out.println("「{」の処理");
+                System.out.println("「{」についての処理");
                 tk = new CToken(CToken.TK_LCUR, lineNo, startCol, "{");
                 accept = true;
                 break;
 
 
             case 25:
-                System.out.println("「}」の処理");
+                System.out.println("「}」についての処理");
                 tk = new CToken(CToken.TK_RCUR, lineNo, startCol, "}");
                 accept = true;
                 break;
