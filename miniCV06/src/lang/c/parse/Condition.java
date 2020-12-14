@@ -1,6 +1,7 @@
 package lang.c.parse;
 
 import java.io.PrintStream;
+import java.util.Optional;
 
 import lang.FatalErrorException;
 import lang.c.CParseContext;
@@ -13,7 +14,7 @@ public class Condition extends CParseRule {
 
 	private CParseRule condition;
 	private CParseRule expression;
-	private boolean isTrue;
+	 private Optional<Boolean> status = Optional.ofNullable(null);
 
 	public Condition(CParseContext pcx) {
 	}
@@ -49,15 +50,14 @@ public class Condition extends CParseRule {
             }
             condition.parse(pcx);
 
-        }else if(tk.getType() == CToken.TK_TRUE) {
-        	isTrue = true;
-        	ct.getNextToken(pcx);
-
-        }else if(tk.getType() == CToken.TK_FALSE) {
-        	isTrue = false;
-        	ct.getNextToken(pcx);
+        } else {
+            if (tk.getType() == CToken.TK_TRUE) {
+                status = Optional.of(true);
+            } else {
+                status = Optional.of(false);
+            }
+            ct.getNextToken(pcx);
         }
-
 
     }
 
@@ -76,11 +76,13 @@ public class Condition extends CParseRule {
         PrintStream o = pcx.getIOContext().getOutStream();
         o.println(";;; condition starts");
         if (condition != null) { condition.codeGen(pcx); }
-        if(isTrue) {
-        	o.println("\tMOV\\t#0x0001, (R6)+\t; Condition: true(1)を積む");
-        }else {
-        	o.println("\tMOV\t#0x0000, (R6)+\t; Condition: false(0)を積む");
-        }
+        status.ifPresent(IsCondition -> {
+            if (IsCondition) {
+                o.println("\tMOV\t#0x0001, (R6)+\t; Condition: true(1)を積む");
+            } else {
+                o.println("\tMOV\t#0x0000, (R6)+\t; Condition: false(0)を積む");
+            }
+        });
 
         o.println(";;; condition completes");
     }
@@ -505,8 +507,11 @@ class ConditionNE extends CParseRule {
 	            o.println("\tMOV\t-(R6), R0\t; ConditionNE: 2数を取り出して, 比べる");
 	            o.println("\tMOV\t-(R6), R1\t; ConditionNE:");
 	            o.println("\tMOV\t#0x0001, R2\t; ConditionNE: set true");
-	            o.println("\tCMP\tR0, R1\t; ConditionNE: R1 != R0 = R1-R0 != 0");
-	            o.println("\tCLR\tR2\t\t; ConditionNE: set false");
+	            o.println("\tCMP\tR0, R1\t; ConditionNE: R1 != R0 = R0-R1 != 0" );
+	            o.println("\tBRN\tNE" + seq + " ; ConditionNE:");
+	            o.println("\tCMP\tR1, R0\t; ConditionNE: R1 != R0 = R1-R0 != 0" );
+	            o.println("\tBRN\tNE" + seq + " ; ConditionNE:");
+	            o.println("\tCLR\tR2\t\t; ConditionNE: set true");
 	            o.println("NE" + seq + ":\tMOV\tR2, (R6)+\t; ConditionNE:");
 	        }
 	        o.println(";;; condition != (compare) completes");
