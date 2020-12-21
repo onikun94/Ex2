@@ -30,6 +30,7 @@ public class Statement extends CParseRule {
 		if(StatementAssign.isFirst(tk)) {
 			statement = new StatementAssign(pcx);
 		}else if(StatementIf.isFirst(tk)) {
+			System.out.println(tk.toExplainString());
 			statement = new StatementIf(pcx);
 		}else if(StatementWhile.isFirst(tk)) {
 			statement = new StatementWhile(pcx);

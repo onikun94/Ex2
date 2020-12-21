@@ -25,6 +25,7 @@ public class StatementIf extends CParseRule {
 
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getNextToken(pcx);
+		System.out.println("statementIf"+tk.toExplainString());
 
 		if(tk.getType() != CToken.TK_LPAR) {
 			pcx.fatalError(tk.toExplainString() + "ifの後ろには（がきます");
@@ -47,6 +48,8 @@ public class StatementIf extends CParseRule {
 
 		statement = new Statement(pcx);
 		statement.parse(pcx);
+		//condition = new Condition(pcx);
+		//condition.parse(pcx);
 
 		tk = ct.getCurrentToken(pcx);
 

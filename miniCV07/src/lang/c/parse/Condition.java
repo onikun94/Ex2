@@ -26,6 +26,7 @@ public class Condition extends CParseRule {
         System.out.println("Conditionのparse実行");
         CTokenizer ct = pcx.getTokenizer();
         CToken tk = ct.getCurrentToken(pcx);
+        System.out.println("Conditionの"+tk.toExplainString());
 
         if(Expression.isFirst(tk)) {
             expression = new Expression(pcx);
