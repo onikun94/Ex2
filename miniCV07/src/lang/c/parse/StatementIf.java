@@ -50,12 +50,14 @@ public class StatementIf extends CParseRule {
 		statement.parse(pcx);
 		//condition = new Condition(pcx);
 		//condition.parse(pcx);
+		System.out.println("StatementIfに戻ってきた");
 
 		tk = ct.getCurrentToken(pcx);
 
 		//elseの確認
 		if(tk.getType() == CToken.TK_ELSE) {
-			ct.getNextToken(pcx);
+			System.out.println("elseについての処理");
+			tk = ct.getNextToken(pcx);
 			if(!Statement.isFirst(tk)) {
 				 pcx.fatalError(tk.toExplainString() + "elseには文がこなければなりません");
 			}

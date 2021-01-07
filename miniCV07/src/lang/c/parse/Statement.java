@@ -18,7 +18,8 @@ public class Statement extends CParseRule {
 				 || StatementIf.isFirst(tk)
 				 ||StatementWhile.isFirst(tk)
 				 || StatementInput.isFirst(tk)
-				 || StatementOutput.isFirst(tk);
+				 || StatementOutput.isFirst(tk)
+		         || StatementProcess.isFirst(tk);
 	}
 	public void parse(CParseContext pcx) throws FatalErrorException {
 		System.out.println("Statementのparse実行");
@@ -27,7 +28,7 @@ public class Statement extends CParseRule {
 		CTokenizer ct = pcx.getTokenizer();
 		CToken tk = ct.getCurrentToken(pcx);
 
-		if(StatementAssign.isFirst(tk)) {
+		/*if(StatementAssign.isFirst(tk)) {
 			statement = new StatementAssign(pcx);
 		}else if(StatementIf.isFirst(tk)) {
 			System.out.println(tk.toExplainString());
@@ -40,6 +41,20 @@ public class Statement extends CParseRule {
 			statement = new StatementOutput(pcx);
 		}else {
 			pcx.fatalError(tk.toExplainString() + "予期せぬトークンです");
+		}*/
+
+		if(tk.getType() == CToken.TK_IF) {
+			statement = new StatementIf(pcx);
+		}else if(tk.getType() == CToken.TK_WHILE) {
+			statement = new StatementWhile(pcx);
+		}else if(tk.getType() == CToken.TK_INPUT) {
+			statement = new StatementInput(pcx);
+		}else if(tk.getType() == CToken.TK_OUTPUT) {
+			statement = new StatementOutput(pcx);
+		}else if(tk.getType() == CToken.TK_LCUR) {
+			statement = new StatementProcess(pcx);
+		}else {
+			statement = new StatementAssign(pcx);
 		}
 		statement.parse(pcx);
 	}
