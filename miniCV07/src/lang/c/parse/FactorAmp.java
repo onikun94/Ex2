@@ -13,7 +13,7 @@ public class FactorAmp extends CParseRule {
 	// term ::= factor
 	//private CToken op;
 	private CParseRule numPrime;
-	public static boolean isAddress = false;
+	//public static boolean isAddress = false;
 
 	public FactorAmp(CParseContext pcx) {
 	}
@@ -31,13 +31,14 @@ public class FactorAmp extends CParseRule {
         	numPrime.parse(pcx);
         } else {
         	numPrime = new Primary(pcx);
-        	isAddress = true;
+        	//isAddress = true;
         	numPrime.parse(pcx);
         }
 
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		Primary p = new Primary();
 		System.out.println("FactorAmpのsemanticCheck実行");
 		final int s[] = {
         //		T_err			T_int              T_pint            T_int_arr
@@ -47,8 +48,8 @@ public class FactorAmp extends CParseRule {
 		if (numPrime != null ) {
 	            if (numPrime instanceof Primary) {
 	            	System.out.println("FactorAmpの子節点にprimaryがつながっているとき");
-	            	System.out.println(Primary.isMultPrimary);
-	                if (Primary.isMultPrimary) {
+
+	                if (p.getIsMultPrimary()) {
 	                	System.out.println("primaryMultクラスのオブジェクトが来ていないか確認");
 	                    pcx.fatalError("&の後ろに*は付けられません");
 	                }

@@ -10,7 +10,12 @@ import lang.c.CTokenizer;
 
 public class Primary extends CParseRule {
     private CParseRule mulVar;
-    public static boolean isMultPrimary = false;
+    private boolean isMultPrimary = false;
+
+    public Primary() {
+
+    }
+
     public Primary(CParseContext pcx) {
     }
 
@@ -56,5 +61,9 @@ public class Primary extends CParseRule {
             mulVar.codeGen(pcx);
         }
         o.println(";;; primary completes");
+    }
+
+    public boolean getIsMultPrimary() {
+    	return isMultPrimary;
     }
 }
