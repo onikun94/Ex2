@@ -38,6 +38,7 @@ public class FactorAmp extends CParseRule {
 	}
 
 	public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+		Primary p = new Primary();
 		System.out.println("FactorAmpのsemanticCheck実行");
 		final int s[] = {
         //		T_err			T_int              T_pint            T_int_arr
@@ -47,8 +48,8 @@ public class FactorAmp extends CParseRule {
 		if (numPrime != null ) {
 	            if (numPrime instanceof Primary) {
 	            	System.out.println("FactorAmpの子節点にprimaryがつながっているとき");
-	            	System.out.println(Primary.isMultPrimary);
-	                if (Primary.isMultPrimary) {
+	            	System.out.println(p.getIsMultPrimary());
+	                if (p.getIsMultPrimary()) {
 	                	System.out.println("primaryMultクラスのオブジェクトが来ていないか確認");
 	                    pcx.fatalError("&の後ろに*は付けられません");
 	                }

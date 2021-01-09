@@ -35,4 +35,4 @@
 // (5) XXXXXをポインタ型T_pintに,YYYYYをfalseにする
 //&*ip_var	// 不当
 //&i_var	// 正当
-//&ip_var	// 不当
+&ip_var	// 不当

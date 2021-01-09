@@ -43,6 +43,7 @@ public class Variable extends CParseRule {
 
     @Override
     public void semanticCheck(CParseContext pcx) throws FatalErrorException {
+    	Primary p = new Primary();
     	System.out.println("VariableのsemanticCheck実行");
     	System.out.println("変数identは"+ident+"に遷移");
     	//final int Arr = array.getCType().getType();//ここでとまっている
@@ -62,7 +63,7 @@ public class Variable extends CParseRule {
               if ((ident.getCType().getType() == CType.T_int_arr) || (ident.getCType().getType() == CType.T_pint_arr)) {
             	  if(ident.getCType().getType() == CType.T_int_arr) {
             		  System.out.println("配列がint型の場合");
-                   	  if( array == null &&  Primary.isMultPrimary == true) {
+                   	  if( array == null && p.getIsMultPrimary() ) {
                 		  pcx.fatalError("ポインタの識別子はint*型かint*[]型でないといけません");
                 	  }
             		  else if(array == null) {
@@ -76,7 +77,7 @@ public class Variable extends CParseRule {
                   }else if(ident.getCType().getType() == CType.T_pint_arr) {
                 	  System.out.println("配列がpint型の場合");
 
-                	  if(array == null && Primary.isMultPrimary == true) {
+                	  if(array == null && p.getIsMultPrimary()) {
                 		  pcx.fatalError("ポインタの識別子はint*型かint*[]型でないといけません");
                 	  }
                 	  else if(array == null) {
