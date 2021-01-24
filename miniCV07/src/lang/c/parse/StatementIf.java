@@ -58,6 +58,10 @@ public class StatementIf extends CParseRule {
 		if(tk.getType() == CToken.TK_ELSE) {
 			System.out.println("elseについての処理");
 			tk = ct.getNextToken(pcx);
+			System.out.println("elseの後ろのtokenは"+tk.getType());
+			if(tk.getType() != CToken.TK_ELSE) {
+				pcx.fatalError(tk.toExplainString() + "elseの後ろには「{」が来ます");
+			}
 			if(!Statement.isFirst(tk)) {
 				 pcx.fatalError(tk.toExplainString() + "elseには文がこなければなりません");
 			}
