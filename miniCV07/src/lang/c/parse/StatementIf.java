@@ -59,7 +59,7 @@ public class StatementIf extends CParseRule {
 			System.out.println("elseについての処理");
 			tk = ct.getNextToken(pcx);
 			System.out.println("elseの後ろのtokenは"+tk.getType());
-			if(tk.getType() != CToken.TK_ELSE) {
+			if(tk.getType() != CToken.TK_LCUR && tk.getType() != CToken.TK_IF) {
 				pcx.fatalError(tk.toExplainString() + "elseの後ろには「{」が来ます");
 			}
 			if(!Statement.isFirst(tk)) {
@@ -68,6 +68,11 @@ public class StatementIf extends CParseRule {
 
 			statementElse = new Statement(pcx);
 			statementElse.parse(pcx);
+
+			tk = ct.getCurrentToken(pcx);
+			if(tk.getType() == CToken.TK_ELSE) {
+				pcx.fatalError(tk.toExplainString() + "elseを複数書くことはできません");
+			}
 
 		}
 
@@ -98,7 +103,7 @@ public class StatementIf extends CParseRule {
 	        }
 
 	        o.println("\tMOV\t-(R6), R0\t;StatementIf: スタックトップからconditionの結果を持ってくる");
-	        o.println("BRZ ifEnd" + seq + "\t;;; StatementIf:");
+	        o.println("  BRZ ifEnd" + seq + "\t;;; StatementIf:");
 
 	        if (statement != null) {
 	            statement.codeGen(pcx);

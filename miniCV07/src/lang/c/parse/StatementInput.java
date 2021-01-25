@@ -30,7 +30,7 @@ public class StatementInput extends CParseRule {
 		CToken tk = ct.getCurrentToken(pcx);
 
 		if(tk.getType() != CToken.TK_SEMI) {
-			 pcx.fatalError(";がありません");
+			 pcx.fatalError(";がないか不正な値をinputしています");
 		}
 
 		ct.getNextToken(pcx);
